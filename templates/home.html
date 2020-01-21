@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'BenchmarkingPlatform/home.css' %}">
 </head>
 <body>
     {% if user.is_authenticated %}

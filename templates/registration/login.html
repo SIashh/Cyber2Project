@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Page</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'BenchmarkingPlatform/login.css' %}">
 </head>
 <body>
-    <form method="post">
-        {% csrf_token %}
-        <!-- Display forms args in <p> tags -->
-        {{ form.as_p }}
-    <button type="submit">Login</button>
-    </form>
+    <div class="body"></div>
+    <div class="grad"></div>
+    <div class="header">
+        <div>Site<span>Random</span></div>
+    </div>
+    <div class="login">
+        <form method="post">
+            {% csrf_token %}
+            <!-- Display forms args in <p> tags -->
+            <input type="text" placeholder="Username" name="username" required id="id_username"><br>
+            <input type="password" placeholder="Password" name="password" required id="id_password"><br>
+            <input type="submit" value="Log in"></input>
+        </form>
+    </div>
 </body>
 </html>
