@@ -2,24 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://bootswatch.com/4/lumen/bootstrap.min.css">
     <title>Login Page</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'BenchmarkingPlatform/login.css' %}">
 </head>
 <body>
-    <div class="body"></div>
-    <div class="grad"></div>
-    <div class="header">
-        <div>Site<span>Random</span></div>
+<div class="fullDiv">
+    <div class="innerLeftBlurred"></div>
+</div>
+<div class="innerRightBlurred"></div>
+<div class="innerRight">
+    <div class="row">
+        <h1 class="text-center login-title"></h1>
+        <div class="account-wall">
+            <div class="profile-img"></div>
+            <form method="post" class="form-signin">
+                {% csrf_token %}
+                <input type="text" name="username" class="form-control" placeholder="Username" required id="id_username" required autofocus>
+                <input type="password" name="password" class="form-control" placeholder="Password" required id="id_password">
+                <button class="btn btn-lg btn-primary btn-block sign-in" type="submit">
+                    Sign in
+                </button>
+            </form>
+            <a href="#" class="text-center new-account">Create an account </a>
+        </div>
     </div>
-    <div class="login">
-        <form method="post">
-            {% csrf_token %}
-            <!-- Display forms args in <p> tags -->
-            <input type="text" placeholder="Username" name="username" required id="id_username"><br>
-            <input type="password" placeholder="Password" name="password" required id="id_password"><br>
-            <input type="submit" value="Log in"></input>
-        </form>
-    </div>
+</div>
 </body>
 </html>
