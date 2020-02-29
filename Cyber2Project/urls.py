@@ -15,13 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic.base import TemplateView
-from django.contrib.auth.decorators import login_required
+from register import views as register_views
+
+#Root URLconf
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', include('benchmarX.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('red-tools/', login_required(TemplateView.as_view(template_name='core/red-tools.html')), name='red-tools'),
-    path('blue-tools/', login_required(TemplateView.as_view(template_name='core/blue-tools.html')), name='blue-tools'),
-    path('', login_required(TemplateView.as_view(template_name='home.html')), name='home'),
+    path('admin/', admin.site.urls),
+    path('register/', register_views.register, name='register'),
 ]

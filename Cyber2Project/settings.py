@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'BenchmarkingPlatform.apps.BenchmarkingplatformConfig',
+    'crispy_forms',
+    'register.apps.AuthConfig',
+    'benchmarX.apps.BenchmarkingplatformConfig',
 ]
 
 MIDDLEWARE = [
@@ -125,4 +127,6 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'home'
 
 # Redirect the user to the home if loggin out
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = '/accounts/login'
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
