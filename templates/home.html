@@ -7,12 +7,20 @@
     <link rel="stylesheet" type="text/css" href="{% static 'BenchmarkingPlatform/home.css' %}">
 </head>
 <body>
-    {% if user.is_authenticated %}
-        Welcome {{ user.username }}, this is the homepage !
-        <p><a href="{% url 'logout' %}">Logout</a></p>
-    {% else %}
-        <p>You are not logged in.</p>
-        <a href="{% url 'login' %}">Login</a>
-    {% endif %}
+<div class="row">
+
+    <a href="/blue-tools">
+        <div class="column" id="blue-tools" >
+            <span>Click here to benchmark  </br> Defensive Solutions</span>
+        </div>
+    </a>
+    <a href="/red-tools">
+        <div class="column" id="red-tools">
+            <span>Click here to benchmark  </br> Offensive Solutions</span>
+        </div>
+    </a>
+    <a href="{% url 'logout' %}">Logout</a>
+
+</div>
 </body>
 </html>

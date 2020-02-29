@@ -21,5 +21,7 @@ from django.contrib.auth.decorators import login_required
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', login_required(TemplateView.as_view(template_name='home.html')), name='home')
+    path('red-tools/', login_required(TemplateView.as_view(template_name='core/red-tools.html')), name='red-tools'),
+    path('blue-tools/', login_required(TemplateView.as_view(template_name='core/blue-tools.html')), name='blue-tools'),
+    path('', login_required(TemplateView.as_view(template_name='home.html')), name='home'),
 ]

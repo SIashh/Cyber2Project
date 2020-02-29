@@ -1,3 +1,57 @@
-a {
-    padding-bottom: 60%;
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body, html{
+    height: 100%;
+}
+
+.row {
+    height: 100%;
+    width: auto;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.column {
+    height: 100%;
+    width: 50%;
+    float: left;
+    display: table;
+    transition: transform 2s, filter 1.5s ease-in-out;
+    transform-origin: center center;
+    filter: brightness(75%);
+    justify-content: center;
+    align-items: center;
+}
+
+.column:hover {
+    filter: brightness(100%);
+}
+
+#blue-tools {
+    max-width: 100%;
+    background-size: contain;
+    background: url('images/blueteam.jpg') no-repeat;
+    background-size: cover;
+}
+
+#red-tools {
+    max-width: 100%;
+    background-size: contain;
+    background: url('images/redteam.jpg') no-repeat center;
+    background-size: cover;
+}
+
+@font-face {
+    font-family: 'Hacked';
+    src : local('HACKED'), url("fonts/HACKED.ttf");
+}
+span {
+    display: table-cell;
+    vertical-align: middle;
+    font-family: Hacked;
+    font-size: xx-large;
+    color: aliceblue;
 }

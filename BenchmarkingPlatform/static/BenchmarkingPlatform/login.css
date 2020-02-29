@@ -1,3 +1,8 @@
+body {
+	margin: 0;
+	height: 100%;
+}
+
 .fullDiv {
 	background: url('images/background.gif') no-repeat;
 	-webkit-background-size: cover;
@@ -31,7 +36,7 @@
 }
 
 .innerLeftBlurred{
-	opacity:0.4;
+	opacity:0.2;
 	background-color: #404040;
 	position: fixed;
 	left: auto;
@@ -75,11 +80,11 @@
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 	width: 250px;
-  color:rgb(21,140,186);
+	color:rgb(21,140,186);
 }
 
 .form-signin input[type="password"]{
-  color:rgb(21,140,186);
+	color:rgb(21,140,186);
 	margin-bottom: 20px;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
@@ -119,6 +124,6 @@
 }
 
 .sign-in{
-  margin-bottom:20px;
+	margin-bottom:20px;
 }
 
