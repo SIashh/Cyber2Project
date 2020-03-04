@@ -1,26 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Homepage</title>
+{% extends 'benchmarX/base_menu.html' %}
+
+{% block external_refs %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'BenchmarkingPlatform/home.css' %}">
-</head>
-<body>
+    <link rel="stylesheet" type="text/css" href="{% static 'BenchmarkingPlatform/css/home.css' %}">
+{% endblock %}
+
+{% block content %}
 <div class="row">
 
     <a href="/blue-tools">
         <div class="column" id="blue-tools" >
-            <span>Click here to benchmark  </br> Defensive Solutions</span>
+            <div class="div-text">Click here to benchmark  </br> Defensive Solutions</div>
         </div>
     </a>
     <a href="/red-tools">
         <div class="column" id="red-tools">
-            <span>Click here to benchmark  </br> Offensive Solutions</span>
+            <div class="div-text">Click here to benchmark  </br> Offensive Solutions</div>
         </div>
     </a>
-    <a href="{% url 'logout' %}">Logout</a>
-
 </div>
-</body>
-</html>
+
+{% endblock %}

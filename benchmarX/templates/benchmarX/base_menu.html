@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BenchmarX</title>
+
+    {% load sass_tags %}
+    <link href="{% sass_src 'BenchmarkingPlatform/css/base_menu.scss' %}" rel="stylesheet" type="text/css">
+
+    {% block external_refs %}
+
+    {% endblock %}
+</head>
+<body>
+
+<nav id="slide-menu">
+    <ul>
+        <h2><a href="/">Castle</a></h2> </br>
+        <li class="red-tools">Red Tools</li>
+        <li class="blue-tools">Blue Tools</li>
+        <li class="sep my-account">My Account</li>
+        <li class="change-pass">Change password</li>
+        <li class="logout"><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</nav>
+
+<div id="content" name="main-div">
+    <div class="menu-trigger"></div>
+
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+</body>
+    {% load static %}
+    <script src="{% static 'BenchmarkingPlatform/js/base_menu.js' %}"></script>
+</html>

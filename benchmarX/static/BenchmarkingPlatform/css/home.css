@@ -1,12 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-body, html{
-    height: 100%;
-}
-
 .row {
     height: 100%;
     width: auto;
@@ -18,40 +9,49 @@ body, html{
     height: 100%;
     width: 50%;
     float: left;
-    display: table;
-    transition: transform 2s, filter 1.5s ease-in-out;
+    position: relative;
+    transition: transform 1.2s, filter 1s ease-in-out;
     transform-origin: center center;
     filter: brightness(75%);
-    justify-content: center;
-    align-items: center;
 }
 
 .column:hover {
     filter: brightness(100%);
+    opacity: 0.95;
+}
+
+.column:hover .div-text{
+    opacity: 0.75;
 }
 
 #blue-tools {
     max-width: 100%;
     background-size: contain;
-    background: url('images/blueteam.jpg') no-repeat;
+    background: url('../images/blueteam.jpg') no-repeat;
     background-size: cover;
 }
 
 #red-tools {
     max-width: 100%;
     background-size: contain;
-    background: url('images/redteam.jpg') no-repeat center;
+    background: url('../images/redteam.jpg') no-repeat center;
     background-size: cover;
 }
 
+
 @font-face {
     font-family: 'Hacked';
-    src : local('HACKED'), url("fonts/HACKED.ttf");
+    src : local('HACKED'), url("../fonts/HACKED.ttf");
 }
-span {
-    display: table-cell;
-    vertical-align: middle;
-    font-family: Hacked;
+.div-text {
+    position: absolute;
+    font-family: "ico";
+    top: 45%;
+    left: 10%;
+    right: 10%;
+    opacity: 0;
     font-size: xx-large;
     color: aliceblue;
+    background-color: #404040;
+    text-align: center;
 }

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'sass_processor',
     'register.apps.AuthConfig',
     'benchmarX.apps.BenchmarkingplatformConfig',
 ]
@@ -69,6 +70,12 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
 ]
 
 WSGI_APPLICATION = 'Cyber2Project.wsgi.application'
@@ -130,3 +137,9 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = '/accounts/login'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+
+SASS_PROCESSOR_ROOT = '/static/BenchmarkingPlatform/css'

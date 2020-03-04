@@ -5,14 +5,18 @@
     <title>BenchmarX</title>
     {% block external_refs %}
 
-
     {% endblock %}
 </head>
 <body>
-    <div id="main-div" name="main-div">
-        {% block content %}
 
-        {% endblock %}
-    </div>
+<div id="content" name="main-div">
+    <div class="menu-trigger"></div>
+
+    {% block content %}
+
+    {% endblock %}
+</div>
+
 </body>
+
 </html>

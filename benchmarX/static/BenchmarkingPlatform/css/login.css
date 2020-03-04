@@ -4,7 +4,7 @@ body {
 }
 
 .fullDiv {
-	background: url('images/background.gif') no-repeat;
+	background: url('../images/background.gif') no-repeat;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -113,7 +113,7 @@ body {
 	-moz-border-radius: 50%;
 	-webkit-border-radius: 50%;
 	border-radius: 50%;
-	background-image: url("images/hacker_icon.png");
+	background-image: url("../images/hacker_icon.png");
 	background-position-x: center;
 	background-size: 95%;
 	background-color: #127ba3;
