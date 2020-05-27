@@ -1,2 +1,13 @@
-# Project exclude paths
-/venv/
+*
+!.gitignore
+!accounts/
+!accounts/**
+!castle/
+!castle/**
+!benchmark/
+!benchmark/**
+!manage.py
+!README.md
+
+**/__pycache__
+**/.sass-cache
