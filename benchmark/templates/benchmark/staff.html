@@ -1,5 +1,31 @@
 {% extends "castle/base.html" %}
+{% load bootstrap4 %}
 
 {% block content %}
-<p>Hello, world. You're at the {{ team }} staff index.</p>
+<div class="row text-left">
+    <div class="col-lg mb-5">
+        <h1>Notes des solutions {{ team }}</h1>
+    </div>
+</div>
+<div class="row text-left">
+    <div class="col-lg mb-4">
+        <h2>Solution {{ first_tool }}</h2> <!--A voir-->
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-4 offset-0 pt-3 pb-3 bg-light">
+        {% if team == 'défensives' %}
+        <form method="post" action="{% url 'benchmark_blue' %}">
+        {% else %}
+        <form method="post" action="{% url 'benchmark_red' %}">
+        {% endif %}
+            {% csrf_token %}
+            {% bootstrap_form form1 %}
+            {% bootstrap_form form2 %}
+            {% buttons %}
+            <button class="btn btn-primary mt-4" type="submit">Benchmark</button>
+            {% endbuttons %}
+        </form>
+    </div>
+</div>
 {% endblock %}
