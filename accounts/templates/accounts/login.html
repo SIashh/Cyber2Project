@@ -4,6 +4,11 @@
 {% block content %}
 <div class="row">
     <div class="col-5 offset-3">
+        <h1>Connexion</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-5 offset-3">
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             {% bootstrap_form form %}
@@ -11,7 +16,15 @@
             <button class="btn btn-primary" type="submit">Connexion</button>
             {% endbuttons %}
         </form>
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-5 offset-3">
         <a href="{% url 'password_reset' %}">Mot de passe oublié ?</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-5 offset-3">
         <a href="{% url 'home' %}">Retour à l'accueil</a>
     </div>
 </div>
