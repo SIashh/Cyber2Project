@@ -126,8 +126,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 # Manually added
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "castle/static")]
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
