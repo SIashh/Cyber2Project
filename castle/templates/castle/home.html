@@ -12,10 +12,9 @@
     <div class="row">
         <div class="col-10 offset-1">
             <p class="font-weight-bold">Bienvenue !</p>
-            {% if user.is_authenticated %}
             <p>Trouvez la solution de sécurité qui convient à votre entreprise avec notre outil de benchmarking !</p>
-            {% else %}
-            <p>Veuillez vous connecter afin d'accéder à votre espace client.</p>
+            {% if not user.is_authenticated %}
+            <p class="font-italic">Veuillez vous connecter afin d'accéder à votre espace client.</p>
             {% endif %}
         </div>
     </div>
