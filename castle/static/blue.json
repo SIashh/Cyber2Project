@@ -1,64 +1,113 @@
 {
-  "capacité_d_analyse" : {
-    "0" : "L'outil analyse moins d'un Go par seconde.",
-    "1" : "L'outil analyse un à cinq Go par seconde.",
-    "2" : "L'outil analyse cinq à dix Go par seconde.",
-    "3" : "L'outil analyse dix à vingt Go par seconde.",
-    "4" : "L'outil analyse vingt à cinquante Go par seconde.",
-    "5" : "L'outil analyse plus de cinquante Go par seconde."
+  "contexte" : {
+    "label": "Contexte",
+    "help_text": "Critère le plus important, évalue la pertinence de l'IDS face à l'architecture du client.",
+    "weight": 5,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
   },
 
-  "détection" : {
-    "0" : "L'outil à detecté moins de 10% des attaques.",
-    "1" : "L'outil à detecté entre 10 et 25% des attaques.",
-    "2" : "L'outil à detecté entre 25 et 50% des attaques.",
-    "3" : "L'outil à detecté entre 50 et 70% des attaques.",
-    "4" : "L'outil à detecté entre 70 et 80% des attaques.",
-    "5" : "L'outil à detecté entre 80 et 100% des attaques."
+  "detection" : {
+    "label": "Détection",
+    "help_text": "Fonction principale d'un IDS, capacité à détecter des anomalies",
+    "weight": 5,
+    "notes": {
+      "0" : "L'outil à detecté moins de 10% des attaques.",
+      "1" : "L'outil à detecté entre 10 et 25% des attaques.",
+      "2" : "L'outil à detecté entre 25 et 50% des attaques.",
+      "3" : "L'outil à detecté entre 50 et 70% des attaques.",
+      "4" : "L'outil à detecté entre 70 et 80% des attaques.",
+      "5" : "L'outil à detecté plus de 80% des attaques."
+    }
   },
 
-  "complexité_d_analyse" : {
-    "0" : "L'outil analyse seulement le trafic connu sur le port associé.",
-    "1" : "L'outil analyse seulement le trafic connu sur des ports paramètres.",
-    "2" : "L'outil à la capacité à analyser la couche réseau applicative.",
-    "3" : "L'outil permet la détection de protocole sur n'importe quel port, il a la capacité à analyser la couche réseau applicative.",
-    "4" : "L'outil permet la détection de protocole sur n'importe quel port, il a les capacités à analyser la totalité des protocoles et la couche réseau applicative.",
-    "5" : "L'outil permet la détection de protocole sur n'importe quel port, il a les capacités à corréler des informations liées sur des flux réseaux différents, à analyser la totalité des protocoles et la couche réseau applicative."
+  "capacite_d_analyse" : {
+    "label": "Capacité d'analyse",
+    "help_text": "Capacité de l'IDS à bien surveiller les flux réseau entrants et sortants",
+    "weight": 5,
+    "notes": {
+      "0" : "L'outil analyse moins d'un Go par seconde.",
+      "1" : "L'outil analyse un à cinq Go par seconde.",
+      "2" : "L'outil analyse cinq à dix Go par seconde.",
+      "3" : "L'outil analyse dix à vingt Go par seconde.",
+      "4" : "L'outil analyse vingt à cinquante Go par seconde.",
+      "5" : "L'outil analyse plus de cinquante Go par seconde."
+    }
   },
 
-  "export_des_résultats" : {
-    "0" : "L'outil ne permet pas d'exporter les résultats.",
-    "1" : "L'outil permet un export partiel des résultats.",
-    "2" : "L'outil permet l'export complet sur un seul format.",
-    "3" : "L'outil permet l'export complet sous différents formats.",
-    "4" : "L'outil permet l'export complet sous différents formats. De plus, l'export est intégrable dans une base de données extérieure.",
-    "5" : "L'outil permet l'export automatique complet sous différents formats. L'export est intégrable dans une base de données extérieure. Enfin, l'export est scriptable."
+  "complexite_d_analyse" : {
+    "label": "Complexité d'analyse",
+    "help_text": "Capacité de l'IDS à connaître et comprendre les protocoles réseaux",
+    "weight": 4,
+    "notes": {
+      "0" : "L'outil analyse seulement le trafic connu sur le port associé.",
+      "1" : "L'outil analyse seulement le trafic connu sur des ports paramètres.",
+      "2" : "L'outil à la capacité à analyser la couche réseau applicative.",
+      "3" : "L'outil permet la détection de protocole sur n'importe quel port, il a la capacité à analyser la couche réseau applicative.",
+      "4" : "L'outil permet la détection de protocole sur n'importe quel port, il a les capacités à analyser la totalité des protocoles et la couche réseau applicative.",
+      "5" : "L'outil permet la détection de protocole sur n'importe quel port, il a les capacités à corréler des informations liées sur des flux réseaux différents, à analyser la totalité des protocoles et la couche réseau applicative."
+    }
   },
 
-  "création_de_règles" : {
-    "0" : "L'outil ne permet pas la création de règles.",
-    "1" : "L'outil permet la création de règles au format propriétaire.",
-    "2" : "L'outil permet la création de règles au format standard.",
-    "3" : "L'outil permet la création de règles compatibles avec la majorité des formats.",
-    "4" : "L'outil permet la création de règles compatibles avec la majorité des formats ainsi que le scripting de création.",
-    "5" : "L'outil permet la création de règles compatibles avec la majorité des formats, le scripting de création ainsi que la création de règles automatiques via une précédente détection."
+  "export_des_resultats" : {
+    "label": "Export des résultats",
+    "help_text": "Clarté et pertinence des résultats de l'IDS une fois exportés",
+    "weight": 4,
+    "notes": {
+      "0" : "L'outil ne permet pas d'exporter les résultats.",
+      "1" : "L'outil permet un export partiel des résultats.",
+      "2" : "L'outil permet l'export complet sur un seul format.",
+      "3" : "L'outil permet l'export complet sous différents formats.",
+      "4" : "L'outil permet l'export complet sous différents formats. De plus, l'export est intégrable dans une base de données extérieure.",
+      "5" : "L'outil permet l'export automatique complet sous différents formats. L'export est intégrable dans une base de données extérieure. Enfin, l'export est scriptable."
+    }
   },
+
+  "creation_de_regles" : {
+    "label": "Création de règles",
+    "help_text": "Configuration rapide et précise des règles de détection au cœur de l'IDS",
+    "weight": 3,
+    "notes": {
+      "0" : "L'outil ne permet pas la création de règles.",
+      "1" : "L'outil permet la création de règles au format propriétaire.",
+      "2" : "L'outil permet la création de règles au format standard.",
+      "3" : "L'outil permet la création de règles compatibles avec la majorité des formats.",
+      "4" : "L'outil permet la création de règles compatibles avec la majorité des formats ainsi que le scripting de création.",
+      "5" : "L'outil permet la création de règles compatibles avec la majorité des formats, le scripting de création ainsi que la création de règles automatiques via une précédente détection."
+    }
+   },
 
   "export_de_fichier_suspect" : {
-    "0" : "L'outil ne propose aucune possibilité.",
-    "1" : "L'outil ne propose aucune possibilité.",
-    "2" : "L'outil permet l'extraction manuelle.",
-    "3" : "L'outil permet l'extraction manuelle via l'interface graphique.",
-    "4" : "L'outil permet l'extraction de fichiers automatique.",
-    "5" : "L'outil permet l'extraction automatique dans un fichier sécurisé avec un mot de passe."
+    "label": "Export de fichier suspect",
+    "help_text": "Possibilité d'exporter un fichier suspect pour analyse ultérieure",
+    "weight": 2,
+    "notes": {
+      "0" : "L'outil ne propose aucune possibilité.",
+      "1" : "L'outil ne propose aucune possibilité.",
+      "2" : "L'outil permet l'extraction manuelle.",
+      "3" : "L'outil permet l'extraction manuelle via l'interface graphique.",
+      "4" : "L'outil permet l'extraction de fichiers automatique.",
+      "5" : "L'outil permet l'extraction automatique dans un fichier sécurisé avec un mot de passe."
+    }
   },
 
-  "prévention" : {
-    "0" : "L'outil ne propose aucune possibilité.",
-    "1" : "L'outil ne propose aucune possibilité.",
-    "3" : "L'outil propose un blocage insuffisant de l'attaque et drop des paquets malicieux.",
-    "4" : "L'outil propose un blocage partiel de l'attaque ainsi qu'un blocage de la connexion.",
-    "5" : "L'outil propose un blocage suffisant de l'attaque, drop du trafic malicieux, blocage de la connexion.",
-    "5" : "L'outil propose un blocage complet de l'attaque, drop du trafic malicieux, blocage de la connexion, reset de la connexion."
+  "prevention" : {
+    "label": "Prévention",
+    "help_text": "Rôle plutôt associé aux IPS, capacité de l'IDS à prévenir une menace",
+    "weight": 1,
+    "notes": {
+      "0" : "L'outil ne propose aucune possibilité.",
+      "1" : "L'outil ne propose aucune possibilité.",
+      "2" : "L'outil propose un blocage insuffisant de l'attaque et drop des paquets malicieux.",
+      "3" : "L'outil propose un blocage partiel de l'attaque ainsi qu'un blocage de la connexion.",
+      "4" : "L'outil propose un blocage suffisant de l'attaque, drop du trafic malicieux, blocage de la connexion.",
+      "5" : "L'outil propose un blocage complet de l'attaque, drop du trafic malicieux, blocage de la connexion, reset de la connexion."
+    }
   }
 }

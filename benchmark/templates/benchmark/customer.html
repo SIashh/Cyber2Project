@@ -4,7 +4,7 @@
 {% block content %}
 <div class="row text-center">
     <div class="col-lg mb-5">
-        <h1>{{ team | title }} criteria's weights customization</h1>
+        <h1>Personnalisation du poids des critères <i>{{ team | title }} team</i></h1>
     </div>
 </div>
 <div class="row text-center">
@@ -18,6 +18,7 @@
             {% bootstrap_form form %}
             {% buttons %}
             <button class="btn btn-primary mt-4" type="submit">Benchmark</button>
+            <a class="btn btn-border mt-4" href="{{ request.path }}">Valeurs par défaut</a>
             {% endbuttons %}
         </form>
     </div>    

@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.utils.translation import ugettext as _
 
-from .forms import CRITERIA_BLUE, CRITERIA_RED, CustomerBlueForm, CustomerRedForm, StaffBlueForm
+from .forms import CRITERIA_BLUE, CRITERIA_RED, CustomerBlueForm, CustomerRedForm, StaffBlueForm, StaffRedForm
 
 
 def is_member_staff(user):
@@ -21,7 +21,7 @@ def staff_blue(request):
     form1 = StaffBlueForm()
     form2 = StaffBlueForm()
     return render(request, 'benchmark/staff.html', {
-        "team": "défensives",
+        "team": "blue",
         "form1" : form1,
         "form2" : form2
     })
@@ -30,8 +30,10 @@ def staff_blue(request):
 @login_required
 @user_passes_test(is_member_staff)
 def staff_red(request):
+    form = StaffRedForm()
     return render(request, 'benchmark/staff.html', {
-        "team": "red"
+        "team": "red",
+        "form": form
     })
 
 
@@ -92,4 +94,24 @@ def benchmark_blue(request):
 @login_required
 @user_passes_test(is_member_customers)
 def benchmark_red(request):
+    pass
+
+
+@login_required
+@user_passes_test(is_member_staff)
+def note_blue(request):
+    pass
+
+@login_required
+@user_passes_test(is_member_staff)
+def note_red(request):
+    # se base sur des données en BDD (models.py à faire)
+    # - récupère l'ID de dossier (ou de client)
+    # - liste des outils
+    # - liste des outils non notés
+
+    # effectue des vérifications après le form.is_valid()
+    # - ID de dossier/client existe ?
+    # - outil existe ?
+
     pass

@@ -1,0 +1,169 @@
+{
+  "contexte" : {
+    "label": "Contexte",
+    "help_text": "Critère le plus important, évalue la pertinence de la solution face à l'architecture du client.",
+    "weight": 5,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  },
+
+  "mise_a_jour" : {
+    "label": "Mise à jour",
+    "help_text": "Capacité de l'outil à détecter les vulnérabilités les plus récentes.",
+    "weight": 5,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  },
+
+  "capacite_de_detection" : {
+    "label": "Capacité de détection",
+    "help_text": "Capacité de l'outil a déceler des vulnérabilités.",
+    "weight": 5,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  },
+
+  "configuration" : {
+    "label": "Configuration",
+    "help_text": "Pertinence des options de configuration des scans proposées par l'outil. Les options de configuration sont importantes pour s’adapter à certaines architectures peu communes, mais trop d’options peuvent perdre l’utilisateur.",
+    "weight": 4,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  },
+
+  "rapidite_d_execution" : {
+    "label": "Rapidité d'exécution",
+    "help_text": "Temps demandé par l'outil pour scanner une cible",
+    "weight": 4,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  },
+
+  "comsommation_de_ressources" : {
+    "label": "Consommation de ressources",
+    "help_text": "Quantité de ressources demandées par l'outil. Un scanner consommant trop de ressources peut être handicapant pour l’entreprise car il faudrait allouer une machine puissante uniquement pour le scanner.",
+    "weight": 4,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  },
+
+  "explication_de_vulnerabilite" : {
+    "label": "Explication de vulnérabilité",
+    "help_text": "Capacité de l'outil à expliquer simplement une vulnérabilité, voire proposer une méthode de correction possible.",
+    "weight": 4,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  },
+
+  "documentation" : {
+    "label": "Documentation",
+    "help_text": "Volume et pertinence de la documentation officielle de l'outil.",
+    "weight": 4,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  },
+
+  "scope_de_scan" : {
+    "label": "Scope de scan",
+    "help_text": "Capacité de l'outil à scanner plusieurs machines simultanément.",
+    "weight": 3,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  },
+
+  "flexibilite" : {
+    "label": "Flexibilité",
+    "help_text": "Capacité de l'outil à s'adapter à ses différents utilisateurs (personnalisation des rapports, des paramètres, ...)",
+    "weight": 3,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  },
+
+  "communaute" : {
+    "label": "Communauté",
+    "help_text": "Présence d'une communauté active autour de l'outil. Une communauté active sur un projet permet de faire avancer le projet dans la bonne direction et de remonter les bugs ou problèmes rapidement aux développeurs.",
+    "weight": 2,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  },
+
+  "compatibilite_avec_outis_externes" : {
+    "label": "Compatibilité avec outils externes",
+    "help_text": "Compatibilité de l'outil avec des applications tierces permettant d'effectuer des scans (Nmap, par exemple). Cette fonctionnalité n'est pas forcément importante mais peut être appréciée.",
+    "weight": 1,
+    "notes": {
+      "0" : "",
+      "1" : "",
+      "2" : "",
+      "3" : "",
+      "4" : "",
+      "5" : ""
+    }
+  }
+}

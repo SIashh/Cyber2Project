@@ -2,28 +2,22 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<div class="row text-left">
+<div class="row text-center">
     <div class="col-lg mb-5">
-        <h1>Notes des solutions {{ team }}</h1>
-    </div>
-</div>
-<div class="row text-left">
-    <div class="col-lg mb-4">
-        <h2>Solution {{ first_tool }}</h2> <!--A voir-->
+        <h1>Notation d'une solution {{ team }} team</h1>
     </div>
 </div>
 <div class="row text-center">
-    <div class="col-4 offset-0 pt-3 pb-3 bg-light">
-        {% if team == 'défensives' %}
-        <form method="post" action="{% url 'benchmark_blue' %}">
+    <div class="col-4 offset-4">
+        {% if team == 'blue' %}
+        <form method="post" action="{% url 'note_blue' %}">
         {% else %}
-        <form method="post" action="{% url 'benchmark_red' %}">
+        <form method="post" action="{% url 'note_red' %}">
         {% endif %}
             {% csrf_token %}
-            {% bootstrap_form form1 %}
-            {% bootstrap_form form2 %}
+            {% bootstrap_form form %}
             {% buttons %}
-            <button class="btn btn-primary mt-4" type="submit">Benchmark</button>
+            <button class="btn btn-primary mt-4" type="submit">Noter la solution</button>
             {% endbuttons %}
         </form>
     </div>
