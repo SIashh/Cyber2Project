@@ -18,12 +18,10 @@ def is_member_customers(user):
 @login_required
 @user_passes_test(is_member_staff)
 def staff_blue(request):
-    form1 = StaffBlueForm()
-    form2 = StaffBlueForm()
+    form = StaffBlueForm()
     return render(request, 'benchmark/staff.html', {
         "team": "blue",
-        "form1" : form1,
-        "form2" : form2
+        "form" : form
     })
 
 
