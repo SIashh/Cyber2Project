@@ -9,7 +9,7 @@
 </div>
 <div class="row">
     <div class="col-5 offset-3">
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="{% url 'register' %}">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}

@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, Us
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
+from .forms import SignUpForm
 
 class PasswordReset(PasswordResetView):
     template_name = 'accounts/password_reset.html'
@@ -50,7 +51,8 @@ def register(request):
         return redirect('home')
 
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
+        print(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, _('Utilisateur créé avec succès !'))
@@ -58,7 +60,7 @@ def register(request):
         else:
             messages.error(request, _('Formulaire invalide.'))
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, 'accounts/register.html', {
         'form': form
     })

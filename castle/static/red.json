@@ -61,11 +61,11 @@
     "weight": 4,
     "notes": {
       "0" : "Le scanner met plus de 36 heures pour analyser une machine.",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
+      "1" : "Le scanner met entre 24 et 36h pour analyser une machine.",
+      "2" : "Le scanner met entre 12 et 24h pour analyser une machine.",
+      "3" : "Le scanner met entre 8 et 12h pour analyser une machine.",
+      "4" : "Le scanner met entre 4 et 8h pour analyser une machine.",
+      "5" : "Le scanner met moins de 4h pour analyser une machine."
     }
   },
 
