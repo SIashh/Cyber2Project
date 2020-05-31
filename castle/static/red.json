@@ -18,12 +18,12 @@
     "help_text": "Capacité de l'outil à détecter les vulnérabilités les plus récentes.",
     "weight": 5,
     "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
+      "0" : "L'outil est mis à jour moins d'une fois par an.",
+      "1" : "L'outil est mis à jour entre une et trois fois par an.",
+      "2" : "L'outil est mis à jour entre six et douze fois par an.",
+      "3" : "L'outil est mis à jour au moins douze fois par an et à chaque sortie de vulnérabilité majeure.",
+      "4" : "L'outil est mis à jour au moins douze fois par an et à chaque sortie de vulnérabilité moyenne ou majeure.",
+      "5" : "L'outil est mis à jour au moins douze fois par an et à chaque sortie de vulnérabilité mineure, moyenne ou majeure."
     }
   },
 
@@ -32,12 +32,12 @@
     "help_text": "Capacité de l'outil a déceler des vulnérabilités.",
     "weight": 5,
     "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
+      "0" : "L'outil à detecté moins de 10% des vulnérabilités.",
+      "1" : "L'outil à detecté entre 10 et 25% des vulnérabilités.",
+      "2" : "L'outil à detecté entre 25 et 50% des vulnérabilités.",
+      "3" : "L'outil à detecté entre 50 et 70% des vulnérabilités.",
+      "4" : "L'outil à detecté entre 70 et 80% des vulnérabilités.",
+      "5" : "L'outil à detecté plus de 80% des vulnérabilités."
     }
   },
 
@@ -46,12 +46,12 @@
     "help_text": "Pertinence des options de configuration des scans proposées par l'outil. Les options de configuration sont importantes pour s’adapter à certaines architectures peu communes, mais trop d’options peuvent perdre l’utilisateur.",
     "weight": 4,
     "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
+      "0" : "Le scanner ne propose pas d'options de configuration.",
+      "1" : "Le scanner propose peu d'options de configuration.",
+      "2" : "Le scanner propose des options de configuration à certains endroits seulement.",
+      "3" : "Il est possible de configurer le scanner de manière basique.",
+      "4" : "Il est possible de configurer le scanner de manière avancée.",
+      "5" : "Il est possible de configurer le scanner au travers de scripts."
     }
   },
 
@@ -60,7 +60,7 @@
     "help_text": "Temps demandé par l'outil pour scanner une cible",
     "weight": 4,
     "notes": {
-      "0" : "",
+      "0" : "Le scanner met plus de 36 heures pour analyser une machine.",
       "1" : "",
       "2" : "",
       "3" : "",
@@ -74,12 +74,12 @@
     "help_text": "Quantité de ressources demandées par l'outil. Un scanner consommant trop de ressources peut être handicapant pour l’entreprise car il faudrait allouer une machine puissante uniquement pour le scanner.",
     "weight": 4,
     "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
+      "0" : "Le scanner utilise plus de 80% du CPU de la machine hôte.",
+      "1" : "Le scanner utilise entre 70 et 80% du CPU de la machine hôte.",
+      "2" : "Le scanner utilise entre 50 et 70% du CPU de la machine hôte.",
+      "3" : "Le scanner utilise entre 25 et 50% du CPU de la machine hôte.",
+      "4" : "Le scanner utilise entre 10 et 25% du CPU de la machine hôte.",
+      "5" : "Le scanner utilise moins de 10% du CPU de la machine hôte."
     }
   },
 
@@ -88,12 +88,12 @@
     "help_text": "Capacité de l'outil à expliquer simplement une vulnérabilité, voire proposer une méthode de correction possible.",
     "weight": 4,
     "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
+      "0" : "Le rapport d'analyse contient seulement le nom de la vulnérabilité.",
+      "1" : "Le rapport d'analyse contient le nom et le CVE-ID de la vulnérabilité.",
+      "2" : "Le rapport d'analyse contient le nom, le CVE-ID et une brève description de la vulnérabilité.",
+      "3" : "Le rapport d'analyse contient le nom, le CVE-ID, une description et la remédiation générique de la vulnérabilité.",
+      "4" : "Le rapport d'analyse contient le nom, le CVE-ID, une description détaillée et adaptée à la vulnérabilité détectée ainsi que la remédiation générique de la vulnérabilité.",
+      "5" : "Le rapport d'analyse contient le nom, le CVE-ID, une description détaillée et adaptée à la vulnérabilité détectée ainsi que la remédiation précise et le lien vers la documentation."
     }
   },
 
@@ -102,12 +102,12 @@
     "help_text": "Volume et pertinence de la documentation officielle de l'outil.",
     "weight": 4,
     "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
+      "0" : "La documentation de l'outil est inexistente.",
+      "1" : "La documentation de l'outil est existente mais très incomplète.",
+      "2" : "La documentation de l'outil est existente mais dépréciée.",
+      "3" : "La documentation de l'outil est existente mais peu détaillée.",
+      "4" : "La documentation de l'outil est détaillée et illustrée.",
+      "5" : "La documentation de l'outil est complète et illustrée."
     }
   },
 
@@ -116,12 +116,12 @@
     "help_text": "Capacité de l'outil à scanner plusieurs machines simultanément.",
     "weight": 3,
     "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
+      "0" : "Le scanner pratique une analyse service par service.",
+      "1" : "Le scanner pratique une analyse machine par machine.",
+      "2" : "Le scanner pratique une analyse par type de machines (ordinateurs, serveurs, ...).",
+      "3" : "Le scanner pratique une analyse par sous-réseau.",
+      "4" : "Le scanner pratique une analyse par réseau.",
+      "5" : "Le scanner pratique une analyse sur toute l'infrastructure."
     }
   },
 
@@ -130,12 +130,12 @@
     "help_text": "Capacité de l'outil à s'adapter à ses différents utilisateurs (personnalisation des rapports, des paramètres, ...)",
     "weight": 3,
     "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
+      "0" : "L'outil ne permet pas la création de règles.",
+      "1" : "L'outil permet la création de règles au format propriétaire.",
+      "2" : "L'outil permet la création de règles au format standard.",
+      "3" : "L'outil permet la création de règles compatibles avec la majorité des formats.",
+      "4" : "L'outil permet la création de règles compatibles avec la majorité des formats ainsi que le scripting de création.",
+      "5" : "L'outil permet la création de règles compatibles avec la majorité des formats, le scripting de création ainsi que la création de règles automatiques via une précédente détection."
     }
   },
 
@@ -144,12 +144,12 @@
     "help_text": "Présence d'une communauté active autour de l'outil. Une communauté active sur un projet permet de faire avancer le projet dans la bonne direction et de remonter les bugs ou problèmes rapidement aux développeurs.",
     "weight": 2,
     "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
+      "0" : "L'outil ne possède pas de communauté présente.",
+      "1" : "L'outil possède une communauté très peu active.",
+      "2" : "L'outil possède un forum communautaire peu actif.",
+      "3" : "L'outil possède un forum communautaire actif.",
+      "4" : "L'outil possède un forum communautaire très actif.",
+      "5" : "L'outil possède un forum communautaire très actif avec des interactions des responsables de l'entreprise du scanner."
     }
   },
 
@@ -158,12 +158,12 @@
     "help_text": "Compatibilité de l'outil avec des applications tierces permettant d'effectuer des scans (Nmap, par exemple). Cette fonctionnalité n'est pas forcément importante mais peut être appréciée.",
     "weight": 1,
     "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
+      "0" : "L'outil n'est compatible avec aucun outil externe.",
+      "1" : "L'outil est compatible avec moins de deux outils externes.",
+      "2" : "L'outil est compatible avec deux à cinq outils externes.",
+      "3" : "L'outil est compatible avec cinq à dix outils externes.",
+      "4" : "L'outil est compatible avec dix à vingt-cinq outils externes.",
+      "5" : "L'outil est compatible avec plus de vingt-cinq outils externes."
     }
   }
 }

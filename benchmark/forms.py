@@ -1,5 +1,6 @@
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.forms import ChoiceField, Form, Select, RadioSelect
+from django.contrib.auth.models import User
 from django.urls import reverse
 from crispy_forms.bootstrap import FormActions, InlineField, InlineRadios
 from crispy_forms.helper import FormHelper
@@ -131,7 +132,7 @@ class CustomerRedForm(Form):
 class StaffBlueForm(Form):
 	customer_id = ChoiceField(
 		widget=Select,
-		choices=(), # liste des ID clients
+		choices=([(x, x.username) for x in User.objects.filter(groups__name="customers")]),
 		label='ID client',
 		help_text="Identifiant du client pour lequel les outils sont benchmarkés.")
 	tool = ChoiceField(
@@ -187,7 +188,7 @@ class StaffBlueForm(Form):
 class StaffRedForm(Form):
 	customer_id = ChoiceField(
 		widget=Select,
-		choices=(), # liste des ID clients
+		choices=([(x, x.username) for x in User.objects.filter(groups__name="customers")]),
 		label='ID client',
 		help_text="Identifiant du client pour lequel les outils sont benchmarkés.")
 	tool = ChoiceField(
