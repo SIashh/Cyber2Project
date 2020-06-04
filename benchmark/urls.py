@@ -9,6 +9,4 @@ urlpatterns = [
     path("customer/red", views.customer_red, name="customer_red"),
     path("benchmark/blue", views.benchmark_blue, name="benchmark_blue"),
     path("benchmark/red", views.benchmark_red, name="benchmark_red"),
-    path("note/blue", views.note_blue, name="note_blue"),
-    path("note/red", views.note_red, name="note_red"),
 ]

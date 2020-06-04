@@ -10,9 +10,9 @@
 <div class="row text-center">
     <div class="col-4 offset-4">
         {% if team == 'blue' %}
-        <form method="post" action="{% url 'note_blue' %}">
+        <form method="post" action="{% url 'staff_blue' %}">
         {% else %}
-        <form method="post" action="{% url 'note_red' %}">
+        <form method="post" action="{% url 'staff_red' %}">
         {% endif %}
             {% csrf_token %}
             {% bootstrap_form form %}

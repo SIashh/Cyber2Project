@@ -2,30 +2,22 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.forms import ChoiceField, Form, Select, RadioSelect
 from django.contrib.auth.models import User
 from django.urls import reverse
-from crispy_forms.bootstrap import FormActions, InlineField, InlineRadios
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import (
-    Button,
-    ButtonHolder,
-    Div,
-    Fieldset,
-    HTML,
-    Layout,
-    Submit,
-)
+
+from .models import RedNote, RedWeight, Tool
 
 import os.path
 import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-blue = os.path.join(BASE_DIR, "castle/static/blue.json")
-red = os.path.join(BASE_DIR, "castle/static/red.json")
+CRITERIA_BLUE = json.load(
+    open(os.path.join(BASE_DIR, "castle/static/blue.json"))
+)
+CRITERIA_RED = json.load(
+    open(os.path.join(BASE_DIR, "castle/static/red.json"))
+)
 
-CRITERIA_BLUE = json.load(open(blue))
-CRITERIA_RED = json.load(open(red))
-
-CHOICES = [
+CHOICES_WEIGHT = [
     (5, "Niveau 5 : Critère de poids majeur"),
     (4, "Niveau 4 : Critère de poids considérable"),
     (3, "Niveau 3 : Critère de poids important"),
@@ -34,53 +26,69 @@ CHOICES = [
 ]
 
 
+def choices_tools_blue():
+    choices = []
+    for t in Tool.objects.all():
+        if t.team == "blue":
+            choices.append((t.id, t.name.title()))
+    return choices
+
+
+def choices_tools_red():
+    choices = []
+    for t in Tool.objects.all():
+        if t.team == "red":
+            choices.append((t.id, t.name.title()))
+    return choices
+
+
 class CustomerBlueForm(Form):
-    # Ajouter ici un champ pour chaque entrée de "static/blue.json" personnalisable par le client
+    # Add here a field for each entry in "static/red.json" which is customizable by the customer
     detection = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_BLUE["detection"]["weight"],
         label=CRITERIA_BLUE["detection"]["label"],
         help_text=CRITERIA_BLUE["detection"]["help_text"],
     )
     capacite_d_analyse = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_BLUE["capacite_d_analyse"]["weight"],
         label=CRITERIA_BLUE["capacite_d_analyse"]["label"],
         help_text=CRITERIA_BLUE["capacite_d_analyse"]["help_text"],
     )
     complexite_d_analyse = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_BLUE["complexite_d_analyse"]["weight"],
         label=CRITERIA_BLUE["complexite_d_analyse"]["label"],
         help_text=CRITERIA_BLUE["complexite_d_analyse"]["help_text"],
     )
     export_des_resultats = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_BLUE["export_des_resultats"]["weight"],
         label=CRITERIA_BLUE["export_des_resultats"]["label"],
         help_text=CRITERIA_BLUE["export_des_resultats"]["help_text"],
     )
     creation_de_regles = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_BLUE["creation_de_regles"]["weight"],
         label=CRITERIA_BLUE["creation_de_regles"]["label"],
         help_text=CRITERIA_BLUE["creation_de_regles"]["help_text"],
     )
     export_de_fichier_suspect = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_BLUE["export_de_fichier_suspect"]["weight"],
         label=CRITERIA_BLUE["export_de_fichier_suspect"]["label"],
         help_text=CRITERIA_BLUE["export_de_fichier_suspect"]["help_text"],
     )
     prevention = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_BLUE["prevention"]["weight"],
         label=CRITERIA_BLUE["prevention"]["label"],
         help_text=CRITERIA_BLUE["prevention"]["help_text"],
@@ -88,73 +96,73 @@ class CustomerBlueForm(Form):
 
 
 class CustomerRedForm(Form):
-    # Ajouter ici un champ pour chaque entrée de "static/red.json" personnalisable par le client
+    # Add here a field for each entry in "static/red.json" which is customizable by the customer
     mise_a_jour = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_RED["mise_a_jour"]["weight"],
         label=CRITERIA_RED["mise_a_jour"]["label"],
         help_text=CRITERIA_RED["mise_a_jour"]["help_text"],
     )
     capacite_de_detection = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_RED["capacite_de_detection"]["weight"],
         label=CRITERIA_RED["capacite_de_detection"]["label"],
         help_text=CRITERIA_RED["capacite_de_detection"]["help_text"],
     )
     configuration = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_RED["configuration"]["weight"],
         label=CRITERIA_RED["configuration"]["label"],
         help_text=CRITERIA_RED["configuration"]["help_text"],
     )
     rapidite_d_execution = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_RED["rapidite_d_execution"]["weight"],
         label=CRITERIA_RED["rapidite_d_execution"]["label"],
         help_text=CRITERIA_RED["rapidite_d_execution"]["help_text"],
     )
     comsommation_de_ressources = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_RED["comsommation_de_ressources"]["weight"],
         label=CRITERIA_RED["comsommation_de_ressources"]["label"],
         help_text=CRITERIA_RED["comsommation_de_ressources"]["help_text"],
     )
     explication_de_vulnerabilite = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_RED["explication_de_vulnerabilite"]["weight"],
         label=CRITERIA_RED["explication_de_vulnerabilite"]["label"],
         help_text=CRITERIA_RED["explication_de_vulnerabilite"]["help_text"],
     )
     scope_de_scan = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_RED["scope_de_scan"]["weight"],
         label=CRITERIA_RED["scope_de_scan"]["label"],
         help_text=CRITERIA_RED["scope_de_scan"]["help_text"],
     )
     flexibilite = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_RED["flexibilite"]["weight"],
         label=CRITERIA_RED["flexibilite"]["label"],
         help_text=CRITERIA_RED["flexibilite"]["help_text"],
     )
     communaute = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_RED["communaute"]["weight"],
         label=CRITERIA_RED["communaute"]["label"],
         help_text=CRITERIA_RED["communaute"]["help_text"],
     )
     compatibilite_avec_outis_externes = ChoiceField(
         widget=Select,
-        choices=CHOICES,
+        choices=CHOICES_WEIGHT,
         initial=CRITERIA_RED["compatibilite_avec_outis_externes"]["weight"],
         label=CRITERIA_RED["compatibilite_avec_outis_externes"]["label"],
         help_text=CRITERIA_RED["compatibilite_avec_outis_externes"][
@@ -164,25 +172,25 @@ class CustomerRedForm(Form):
 
 
 class StaffBlueForm(Form):
-    customer_id = ChoiceField(
+    customer = ChoiceField(
         widget=Select,
         choices=(
             [
-                (x, x.username)
+                (x.id, x.username.title())
                 for x in User.objects.filter(groups__name="customers")
             ]
         ),
-        label="ID client",
+        label="Client",
         help_text="Identifiant du client pour lequel les outils sont benchmarkés.",
     )
     tool = ChoiceField(
         widget=Select,
-        choices=(),  # liste des tools blue non notés
+        choices=choices_tools_blue,
         label="Outil",
         help_text="Outil pour lequel les notes des critères ci-dessous vont s'appliquer.",
     )
 
-    # Ajouter ici un champ pour chaque entrée de "static/blue.json"
+    # Add here a field for each entry in "static/red.json"
     detection = ChoiceField(
         widget=Select,
         choices=[
@@ -249,25 +257,25 @@ class StaffBlueForm(Form):
 
 
 class StaffRedForm(Form):
-    customer_id = ChoiceField(
+    customer = ChoiceField(
         widget=Select,
         choices=(
             [
-                (x, x.username)
+                (x.id, x.username.title())
                 for x in User.objects.filter(groups__name="customers")
             ]
         ),
-        label="ID client",
+        label="Client",
         help_text="Identifiant du client pour lequel les outils sont benchmarkés.",
     )
     tool = ChoiceField(
         widget=Select,
-        choices=(),  # liste des tools red non notés
+        choices=choices_tools_red,
         label="Outil",
         help_text="Outil pour lequel les notes des critères ci-dessous vont s'appliquer.",
     )
 
-    # Ajouter ici un champ pour chaque entrée de "static/red.json"
+    # Add here a field for each entry in "static/red.json"
     mise_a_jour = ChoiceField(
         widget=Select,
         choices=[
