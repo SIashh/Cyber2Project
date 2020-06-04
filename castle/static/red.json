@@ -1,18 +1,4 @@
 {
-  "contexte" : {
-    "label": "Contexte",
-    "help_text": "Critère le plus important, évalue la pertinence de la solution face à l'architecture du client.",
-    "weight": 5,
-    "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
-    }
-  },
-
   "mise_a_jour" : {
     "label": "Mise à jour",
     "help_text": "Capacité de l'outil à détecter les vulnérabilités les plus récentes.",

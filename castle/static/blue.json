@@ -1,18 +1,4 @@
 {
-  "contexte" : {
-    "label": "Contexte",
-    "help_text": "Critère le plus important, évalue la pertinence de l'IDS face à l'architecture du client.",
-    "weight": 5,
-    "notes": {
-      "0" : "",
-      "1" : "",
-      "2" : "",
-      "3" : "",
-      "4" : "",
-      "5" : ""
-    }
-  },
-
   "detection" : {
     "label": "Détection",
     "help_text": "Fonction principale d'un IDS, capacité à détecter des anomalies",

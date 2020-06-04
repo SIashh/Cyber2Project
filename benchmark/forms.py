@@ -183,15 +183,6 @@ class StaffBlueForm(Form):
     )
 
     # Ajouter ici un champ pour chaque entrée de "static/blue.json"
-    contexte = ChoiceField(
-        widget=Select,
-        choices=[
-            (x, CRITERIA_BLUE["contexte"]["notes"][x])
-            for x in CRITERIA_BLUE["contexte"]["notes"]
-        ],
-        label=CRITERIA_BLUE["contexte"]["label"],
-        help_text=CRITERIA_BLUE["contexte"]["help_text"],
-    )
     detection = ChoiceField(
         widget=Select,
         choices=[
@@ -277,15 +268,6 @@ class StaffRedForm(Form):
     )
 
     # Ajouter ici un champ pour chaque entrée de "static/red.json"
-    contexte = ChoiceField(
-        widget=Select,
-        choices=[
-            (x, CRITERIA_RED["contexte"]["notes"][x])
-            for x in CRITERIA_RED["contexte"]["notes"]
-        ],
-        label=CRITERIA_RED["contexte"]["label"],
-        help_text=CRITERIA_RED["contexte"]["help_text"],
-    )
     mise_a_jour = ChoiceField(
         widget=Select,
         choices=[
