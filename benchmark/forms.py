@@ -26,17 +26,18 @@ CHOICES_WEIGHT = [
 
 
 class StaffBlueForm(Form):
+    # Customer to work for
     customer = ChoiceField(
         widget=Select,
-        choices=(
-            [
-                (x.id, x.username.title())
-                for x in User.objects.filter(groups__name="customers")
-            ]
-        ),
+        choices=[
+            (x.id, x.username.title())
+            for x in User.objects.filter(groups__name="customers")
+        ],
         label="Client",
         help_text="Identifiant du client pour lequel les outils sont benchmarkés.",
     )
+    
+    # Tool to note
     tool = ChoiceField(
         widget=Select,
         choices=[
@@ -115,17 +116,18 @@ class StaffBlueForm(Form):
 
 
 class StaffRedForm(Form):
+    # Customer to work for
     customer = ChoiceField(
         widget=Select,
-        choices=(
-            [
-                (x.id, x.username.title())
-                for x in User.objects.filter(groups__name="customers")
-            ]
-        ),
+        choices=[
+            (x.id, x.username.title())
+            for x in User.objects.filter(groups__name="customers")
+        ],
         label="Client",
         help_text="Identifiant du client pour lequel les outils sont benchmarkés.",
     )
+
+    # Tool to note
     tool = ChoiceField(
         widget=Select,
         choices=[
