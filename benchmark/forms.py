@@ -36,7 +36,7 @@ class StaffBlueForm(Form):
         label="Client",
         help_text="Identifiant du client pour lequel les outils sont benchmarkés.",
     )
-    
+
     # Tool to note
     tool = ChoiceField(
         widget=Select,
@@ -341,6 +341,13 @@ class CustomerRedForm(Form):
         initial=CRITERIA_RED["explication_de_vulnerabilite"]["weight"],
         label=CRITERIA_RED["explication_de_vulnerabilite"]["label"],
         help_text=CRITERIA_RED["explication_de_vulnerabilite"]["help_text"],
+    )
+    documentation = ChoiceField(
+        widget=Select,
+        choices=CHOICES_WEIGHT,
+        initial=CRITERIA_RED["documentation"]["weight"],
+        label=CRITERIA_RED["documentation"]["label"],
+        help_text=CRITERIA_RED["documentation"]["help_text"],
     )
     scope_de_scan = ChoiceField(
         widget=Select,
