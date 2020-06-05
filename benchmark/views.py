@@ -177,25 +177,20 @@ def customer_blue(request):
                     export_de_fichier_suspect=form.cleaned_data.get('export_de_fichier_suspect'),
                     prevention=form.cleaned_data.get('prevention')
                 )
-                print()
-                print()
-                print(weight.detection)
-                print()
-                print()
                 weight.save()
                 messages.success(request, _("Pondération enregistrée !"))
                 return redirect(reverse("customer_blue"))
             else:
                 # Yes, update in DB
-                weight = BlueWeight.objects.get(customer_id=customer)
-                weight.detection=int(form.cleaned_data.get('detection')),
-                weight.capacite_d_analyse=int(form.cleaned_data.get('capacite_d_analyse')),
-                weight.complexite_d_analyse=int(form.cleaned_data.get('complexite_d_analyse')),
-                weight.export_des_resultats=int(form.cleaned_data.get('export_des_resultats')),
-                weight.creation_de_regles=int(form.cleaned_data.get('creation_de_regles')),
-                weight.export_de_fichier_suspect=int(form.cleaned_data.get('export_de_fichier_suspect')),
-                weight.prevention=int(form.cleaned_data.get('prevention'))
-                weight.save()
+                weight = BlueWeight.objects.filter(customer_id=customer).update(
+                    detection=form.cleaned_data.get('capacite_d_analyse'),
+                    capacite_d_analyse=form.cleaned_data.get('capacite_d_analyse'),
+                    complexite_d_analyse=form.cleaned_data.get('complexite_d_analyse'),
+                    export_des_resultats=form.cleaned_data.get('export_des_resultats'),
+                    creation_de_regles=form.cleaned_data.get('creation_de_regles'),
+                    export_de_fichier_suspect=form.cleaned_data.get('export_de_fichier_suspect'),
+                    prevention=form.cleaned_data.get('prevention')
+                )
                 messages.success(request, _("Pondération mise à jour !"))
                 return redirect(reverse("customer_blue"))
         else:
