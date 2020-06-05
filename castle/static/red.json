@@ -139,7 +139,7 @@
     }
   },
 
-  "compatibilite_avec_outis_externes" : {
+  "compatibilite_avec_outils_externes" : {
     "label": "Compatibilité avec outils externes",
     "help_text": "Compatibilité de l'outil avec des applications tierces permettant d'effectuer des scans (Nmap, par exemple). Cette fonctionnalité n'est pas forcément importante mais peut être appréciée.",
     "weight": 1,

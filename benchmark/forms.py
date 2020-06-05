@@ -160,12 +160,12 @@ class CustomerRedForm(Form):
         label=CRITERIA_RED["communaute"]["label"],
         help_text=CRITERIA_RED["communaute"]["help_text"],
     )
-    compatibilite_avec_outis_externes = ChoiceField(
+    compatibilite_avec_outils_externes = ChoiceField(
         widget=Select,
         choices=CHOICES_WEIGHT,
-        initial=CRITERIA_RED["compatibilite_avec_outis_externes"]["weight"],
-        label=CRITERIA_RED["compatibilite_avec_outis_externes"]["label"],
-        help_text=CRITERIA_RED["compatibilite_avec_outis_externes"][
+        initial=CRITERIA_RED["compatibilite_avec_outils_externes"]["weight"],
+        label=CRITERIA_RED["compatibilite_avec_outils_externes"]["label"],
+        help_text=CRITERIA_RED["compatibilite_avec_outils_externes"][
             "help_text"
         ],
     )
@@ -366,14 +366,14 @@ class StaffRedForm(Form):
         label=CRITERIA_RED["communaute"]["label"],
         help_text=CRITERIA_RED["communaute"]["help_text"],
     )
-    compatibilite_avec_outis_externes = ChoiceField(
+    compatibilite_avec_outils_externes = ChoiceField(
         widget=Select,
         choices=[
-            (x, CRITERIA_RED["compatibilite_avec_outis_externes"]["notes"][x])
-            for x in CRITERIA_RED["compatibilite_avec_outis_externes"]["notes"]
+            (x, CRITERIA_RED["compatibilite_avec_outils_externes"]["notes"][x])
+            for x in CRITERIA_RED["compatibilite_avec_outils_externes"]["notes"]
         ],
-        label=CRITERIA_RED["compatibilite_avec_outis_externes"]["label"],
-        help_text=CRITERIA_RED["compatibilite_avec_outis_externes"][
+        label=CRITERIA_RED["compatibilite_avec_outils_externes"]["label"],
+        help_text=CRITERIA_RED["compatibilite_avec_outils_externes"][
             "help_text"
         ],
     )

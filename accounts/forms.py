@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(
         max_length=200,
-        help_text="Requis. Veuillez renseigner votre email d'entreprise.",
+        help_text="Requis. Veuillez renseigner votre adresse email professionnelle.",
     )
     # username = forms.CharField(max_length=200, label='Nom d\'entreprise', help_text='Requis. Ce nom constitue votre ID pour les traitements futurs.')
 

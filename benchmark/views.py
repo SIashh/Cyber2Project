@@ -32,12 +32,12 @@ def staff_valid_data(team, form):
     tools = [t.id for t in Tool.objects.all()]
     if team == "blue":
         notes = [
-            (rn.customer_id, rn.tool_id) for rn in BlueNote.objects.all()
-        ]  # (customer, tool)
+            (bn.customer_id, bn.tool_id) for bn in BlueNote.objects.all()
+        ]
     elif team == "red":
         notes = [
             (rn.customer_id, rn.tool_id) for rn in RedNote.objects.all()
-        ]  # (customer, tool)
+        ]
 
     # Form data
     customer = int(form.cleaned_data.get("customer"))
@@ -136,8 +136,8 @@ def staff_red(request):
                     scope_de_scan=form.cleaned_data.get("scope_de_scan"),
                     flexibilite=form.cleaned_data.get("flexibilite"),
                     communaute=form.cleaned_data.get("communaute"),
-                    compatibilite_avec_outis_externes=form.cleaned_data.get(
-                        "compatibilite_avec_outis_externes"
+                    compatibilite_avec_outils_externes=form.cleaned_data.get(
+                        "compatibilite_avec_outils_externes"
                     ),
                 )
                 note.save()
@@ -163,7 +163,7 @@ def customer_blue(request):
         form = CustomerBlueForm(data=request.POST)
         if form.is_valid():
             # Is there already an entry in DB?
-            customers_blueweights = [bn.customer_id for bn in BlueWeight.objects.all()]
+            customers_blueweights = [bw.customer_id for bw in BlueWeight.objects.all()]
             customer = request.user.id
             if customer not in customers_blueweights:
                 # No, Insert in DB
@@ -206,10 +206,56 @@ def customer_blue(request):
 @login_required
 @user_passes_test(is_member_customers)
 def customer_red(request):
-    form = CustomerRedForm()
-    return render(
-        request, "benchmark/customer.html", {"team": "red", "form": form}
-    )
+    if request.method == "POST":
+        form = CustomerRedForm(data=request.POST)
+        if form.is_valid():
+            # Is there already an entry in DB?
+            customers_redweights = [rw.customer_id for rw in RedWeight.objects.all()]
+            customer = request.user.id
+            if customer not in customers_redweights:
+                # No, Insert in DB
+                weight = RedWeight(
+                    customer_id=customer,
+                    mise_a_jour=form.cleaned_data.get('mise_a_jour'),
+                    capacite_de_detection=form.cleaned_data.get('capacite_de_detection'),
+                    configuration=form.cleaned_data.get('configuration'),
+                    rapidite_d_execution=form.cleaned_data.get('rapidite_d_execution'),
+                    comsommation_de_ressources=form.cleaned_data.get('comsommation_de_ressources'),
+                    explication_de_vulnerabilite=form.cleaned_data.get('explication_de_vulnerabilite'),
+                    documentation=form.cleaned_data.get('documentation'),
+                    scope_de_scan=form.cleaned_data.get('scope_de_scan'),
+                    flexibilite=form.cleaned_data.get('flexibilite'),
+                    communaute=form.cleaned_data.get('communaute'),
+                    compatibilite_avec_outils_externes=form.cleaned_data.get('compatibilite_avec_outils_externes')
+                )
+                weight.save()
+                messages.success(request, _("Pondération enregistrée !"))
+                return redirect(reverse("customer_red"))
+            else:
+                # Yes, update in DB
+                weight = RedWeight.objects.filter(customer_id=customer).update(
+                    mise_a_jour=form.cleaned_data.get('mise_a_jour'),
+                    capacite_de_detection=form.cleaned_data.get('capacite_de_detection'),
+                    configuration=form.cleaned_data.get('configuration'),
+                    rapidite_d_execution=form.cleaned_data.get('rapidite_d_execution'),
+                    comsommation_de_ressources=form.cleaned_data.get('comsommation_de_ressources'),
+                    explication_de_vulnerabilite=form.cleaned_data.get('explication_de_vulnerabilite'),
+                    documentation=form.cleaned_data.get('documentation'),
+                    scope_de_scan=form.cleaned_data.get('scope_de_scan'),
+                    flexibilite=form.cleaned_data.get('flexibilite'),
+                    communaute=form.cleaned_data.get('communaute'),
+                    compatibilite_avec_outils_externes=form.cleaned_data.get('compatibilite_avec_outils_externes')
+                )
+                messages.success(request, _("Pondération mise à jour !"))
+                return redirect(reverse("customer_red"))
+        else:
+            messages.error(request, _("Formulaire invalide."))
+            return redirect(reverse("customer_red"))
+    else:
+        form = CustomerRedForm()
+        return render(
+            request, "benchmark/customer.html", {"team": "red", "form": form}
+        )
 
 
 @login_required

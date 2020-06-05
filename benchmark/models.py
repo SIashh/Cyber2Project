@@ -60,7 +60,7 @@ class RedNote(models.Model):
     scope_de_scan = models.IntegerField()
     flexibilite = models.IntegerField()
     communaute = models.IntegerField()
-    compatibilite_avec_outis_externes = models.IntegerField()
+    compatibilite_avec_outils_externes = models.IntegerField()
 
     def __str__(self):
         return "RedNote: {} ({})".format(self.customer_id, self.tool_id)
@@ -81,7 +81,7 @@ class RedWeight(models.Model):
     scope_de_scan = models.IntegerField()
     flexibilite = models.IntegerField()
     communaute = models.IntegerField()
-    compatibilite_avec_outis_externes = models.IntegerField()
+    compatibilite_avec_outils_externes = models.IntegerField()
 
     def __str__(self):
         return "RedWeight: {}".format(self.customer_id)
