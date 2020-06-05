@@ -31,13 +31,9 @@ def staff_valid_data(team, form):
     customers = [u.id for u in User.objects.filter(groups__name="customers")]
     tools = [t.id for t in Tool.objects.all()]
     if team == "blue":
-        notes = [
-            (bn.customer_id, bn.tool_id) for bn in BlueNote.objects.all()
-        ]
+        notes = [(bn.customer_id, bn.tool_id) for bn in BlueNote.objects.all()]
     elif team == "red":
-        notes = [
-            (rn.customer_id, rn.tool_id) for rn in RedNote.objects.all()
-        ]
+        notes = [(rn.customer_id, rn.tool_id) for rn in RedNote.objects.all()]
 
     # Form data
     customer = int(form.cleaned_data.get("customer"))
@@ -163,33 +159,57 @@ def customer_blue(request):
         form = CustomerBlueForm(data=request.POST)
         if form.is_valid():
             # Is there already an entry in DB?
-            customers_blueweights = [bw.customer_id for bw in BlueWeight.objects.all()]
+            customers_blueweights = [
+                bw.customer_id for bw in BlueWeight.objects.all()
+            ]
             customer = request.user.id
             if customer not in customers_blueweights:
                 # No, Insert in DB
                 weight = BlueWeight(
                     customer_id=customer,
-                    detection=form.cleaned_data.get('detection'),
-                    capacite_d_analyse=form.cleaned_data.get('capacite_d_analyse'),
-                    complexite_d_analyse=form.cleaned_data.get('complexite_d_analyse'),
-                    export_des_resultats=form.cleaned_data.get('export_des_resultats'),
-                    creation_de_regles=form.cleaned_data.get('creation_de_regles'),
-                    export_de_fichier_suspect=form.cleaned_data.get('export_de_fichier_suspect'),
-                    prevention=form.cleaned_data.get('prevention')
+                    detection=form.cleaned_data.get("detection"),
+                    capacite_d_analyse=form.cleaned_data.get(
+                        "capacite_d_analyse"
+                    ),
+                    complexite_d_analyse=form.cleaned_data.get(
+                        "complexite_d_analyse"
+                    ),
+                    export_des_resultats=form.cleaned_data.get(
+                        "export_des_resultats"
+                    ),
+                    creation_de_regles=form.cleaned_data.get(
+                        "creation_de_regles"
+                    ),
+                    export_de_fichier_suspect=form.cleaned_data.get(
+                        "export_de_fichier_suspect"
+                    ),
+                    prevention=form.cleaned_data.get("prevention"),
                 )
                 weight.save()
                 messages.success(request, _("Pondération enregistrée !"))
                 return redirect(reverse("customer_blue"))
             else:
                 # Yes, update in DB
-                weight = BlueWeight.objects.filter(customer_id=customer).update(
-                    detection=form.cleaned_data.get('capacite_d_analyse'),
-                    capacite_d_analyse=form.cleaned_data.get('capacite_d_analyse'),
-                    complexite_d_analyse=form.cleaned_data.get('complexite_d_analyse'),
-                    export_des_resultats=form.cleaned_data.get('export_des_resultats'),
-                    creation_de_regles=form.cleaned_data.get('creation_de_regles'),
-                    export_de_fichier_suspect=form.cleaned_data.get('export_de_fichier_suspect'),
-                    prevention=form.cleaned_data.get('prevention')
+                weight = BlueWeight.objects.filter(
+                    customer_id=customer
+                ).update(
+                    detection=form.cleaned_data.get("capacite_d_analyse"),
+                    capacite_d_analyse=form.cleaned_data.get(
+                        "capacite_d_analyse"
+                    ),
+                    complexite_d_analyse=form.cleaned_data.get(
+                        "complexite_d_analyse"
+                    ),
+                    export_des_resultats=form.cleaned_data.get(
+                        "export_des_resultats"
+                    ),
+                    creation_de_regles=form.cleaned_data.get(
+                        "creation_de_regles"
+                    ),
+                    export_de_fichier_suspect=form.cleaned_data.get(
+                        "export_de_fichier_suspect"
+                    ),
+                    prevention=form.cleaned_data.get("prevention"),
                 )
                 messages.success(request, _("Pondération mise à jour !"))
                 return redirect(reverse("customer_blue"))
@@ -210,23 +230,35 @@ def customer_red(request):
         form = CustomerRedForm(data=request.POST)
         if form.is_valid():
             # Is there already an entry in DB?
-            customers_redweights = [rw.customer_id for rw in RedWeight.objects.all()]
+            customers_redweights = [
+                rw.customer_id for rw in RedWeight.objects.all()
+            ]
             customer = request.user.id
             if customer not in customers_redweights:
                 # No, Insert in DB
                 weight = RedWeight(
                     customer_id=customer,
-                    mise_a_jour=form.cleaned_data.get('mise_a_jour'),
-                    capacite_de_detection=form.cleaned_data.get('capacite_de_detection'),
-                    configuration=form.cleaned_data.get('configuration'),
-                    rapidite_d_execution=form.cleaned_data.get('rapidite_d_execution'),
-                    comsommation_de_ressources=form.cleaned_data.get('comsommation_de_ressources'),
-                    explication_de_vulnerabilite=form.cleaned_data.get('explication_de_vulnerabilite'),
-                    documentation=form.cleaned_data.get('documentation'),
-                    scope_de_scan=form.cleaned_data.get('scope_de_scan'),
-                    flexibilite=form.cleaned_data.get('flexibilite'),
-                    communaute=form.cleaned_data.get('communaute'),
-                    compatibilite_avec_outils_externes=form.cleaned_data.get('compatibilite_avec_outils_externes')
+                    mise_a_jour=form.cleaned_data.get("mise_a_jour"),
+                    capacite_de_detection=form.cleaned_data.get(
+                        "capacite_de_detection"
+                    ),
+                    configuration=form.cleaned_data.get("configuration"),
+                    rapidite_d_execution=form.cleaned_data.get(
+                        "rapidite_d_execution"
+                    ),
+                    comsommation_de_ressources=form.cleaned_data.get(
+                        "comsommation_de_ressources"
+                    ),
+                    explication_de_vulnerabilite=form.cleaned_data.get(
+                        "explication_de_vulnerabilite"
+                    ),
+                    documentation=form.cleaned_data.get("documentation"),
+                    scope_de_scan=form.cleaned_data.get("scope_de_scan"),
+                    flexibilite=form.cleaned_data.get("flexibilite"),
+                    communaute=form.cleaned_data.get("communaute"),
+                    compatibilite_avec_outils_externes=form.cleaned_data.get(
+                        "compatibilite_avec_outils_externes"
+                    ),
                 )
                 weight.save()
                 messages.success(request, _("Pondération enregistrée !"))
@@ -234,17 +266,27 @@ def customer_red(request):
             else:
                 # Yes, update in DB
                 weight = RedWeight.objects.filter(customer_id=customer).update(
-                    mise_a_jour=form.cleaned_data.get('mise_a_jour'),
-                    capacite_de_detection=form.cleaned_data.get('capacite_de_detection'),
-                    configuration=form.cleaned_data.get('configuration'),
-                    rapidite_d_execution=form.cleaned_data.get('rapidite_d_execution'),
-                    comsommation_de_ressources=form.cleaned_data.get('comsommation_de_ressources'),
-                    explication_de_vulnerabilite=form.cleaned_data.get('explication_de_vulnerabilite'),
-                    documentation=form.cleaned_data.get('documentation'),
-                    scope_de_scan=form.cleaned_data.get('scope_de_scan'),
-                    flexibilite=form.cleaned_data.get('flexibilite'),
-                    communaute=form.cleaned_data.get('communaute'),
-                    compatibilite_avec_outils_externes=form.cleaned_data.get('compatibilite_avec_outils_externes')
+                    mise_a_jour=form.cleaned_data.get("mise_a_jour"),
+                    capacite_de_detection=form.cleaned_data.get(
+                        "capacite_de_detection"
+                    ),
+                    configuration=form.cleaned_data.get("configuration"),
+                    rapidite_d_execution=form.cleaned_data.get(
+                        "rapidite_d_execution"
+                    ),
+                    comsommation_de_ressources=form.cleaned_data.get(
+                        "comsommation_de_ressources"
+                    ),
+                    explication_de_vulnerabilite=form.cleaned_data.get(
+                        "explication_de_vulnerabilite"
+                    ),
+                    documentation=form.cleaned_data.get("documentation"),
+                    scope_de_scan=form.cleaned_data.get("scope_de_scan"),
+                    flexibilite=form.cleaned_data.get("flexibilite"),
+                    communaute=form.cleaned_data.get("communaute"),
+                    compatibilite_avec_outils_externes=form.cleaned_data.get(
+                        "compatibilite_avec_outils_externes"
+                    ),
                 )
                 messages.success(request, _("Pondération mise à jour !"))
                 return redirect(reverse("customer_red"))
