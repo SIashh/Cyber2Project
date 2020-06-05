@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.utils.translation import ugettext as _
 
-from .models import BlueNote, RedNote, Tool
+from .models import BlueNote, BlueWeight, RedNote, RedWeight, Tool
 
 from .forms import (
     CRITERIA_BLUE,
@@ -51,6 +51,14 @@ def staff_valid_data(team, form):
     if (customer, tool) in notes:
         return False
 
+    return True
+
+
+def customer_valid_data(request):
+    customers = [u.id for u in User.objects.filter(groups__name="customers")]
+    customer = request.user.id
+    if customer not in customers:
+        return False
     return True
 
 
@@ -151,10 +159,53 @@ def staff_red(request):
 @login_required
 @user_passes_test(is_member_customers)
 def customer_blue(request):
-    form = CustomerBlueForm()
-    return render(
-        request, "benchmark/customer.html", {"team": "blue", "form": form}
-    )
+    if request.method == "POST":
+        form = CustomerBlueForm(data=request.POST)
+        if form.is_valid():
+            # Is there already an entry in DB?
+            customers_blueweights = [bn.customer_id for bn in BlueWeight.objects.all()]
+            customer = request.user.id
+            if customer not in customers_blueweights:
+                # No, Insert in DB
+                weight = BlueWeight(
+                    customer_id=customer,
+                    detection=form.cleaned_data.get('detection'),
+                    capacite_d_analyse=form.cleaned_data.get('capacite_d_analyse'),
+                    complexite_d_analyse=form.cleaned_data.get('complexite_d_analyse'),
+                    export_des_resultats=form.cleaned_data.get('export_des_resultats'),
+                    creation_de_regles=form.cleaned_data.get('creation_de_regles'),
+                    export_de_fichier_suspect=form.cleaned_data.get('export_de_fichier_suspect'),
+                    prevention=form.cleaned_data.get('prevention')
+                )
+                print()
+                print()
+                print(weight.detection)
+                print()
+                print()
+                weight.save()
+                messages.success(request, _("Pondération enregistrée !"))
+                return redirect(reverse("customer_blue"))
+            else:
+                # Yes, update in DB
+                weight = BlueWeight.objects.get(customer_id=customer)
+                weight.detection=int(form.cleaned_data.get('detection')),
+                weight.capacite_d_analyse=int(form.cleaned_data.get('capacite_d_analyse')),
+                weight.complexite_d_analyse=int(form.cleaned_data.get('complexite_d_analyse')),
+                weight.export_des_resultats=int(form.cleaned_data.get('export_des_resultats')),
+                weight.creation_de_regles=int(form.cleaned_data.get('creation_de_regles')),
+                weight.export_de_fichier_suspect=int(form.cleaned_data.get('export_de_fichier_suspect')),
+                weight.prevention=int(form.cleaned_data.get('prevention'))
+                weight.save()
+                messages.success(request, _("Pondération mise à jour !"))
+                return redirect(reverse("customer_blue"))
+        else:
+            messages.error(request, _("Formulaire invalide."))
+            return redirect(reverse("customer_blue"))
+    else:
+        form = CustomerBlueForm()
+        return render(
+            request, "benchmark/customer.html", {"team": "blue", "form": form}
+        )
 
 
 @login_required

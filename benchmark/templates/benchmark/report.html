@@ -3,11 +3,22 @@
 
 {% block content %}
 <div class="row text-center">
-    <div class="col-lg mb-5">
+    <div class="col-4 offset-4">
         <h1>Benchmark's report of the {{ team | title }} solutions {{ first_tool }} and {{ second_tool }}</h1>
+        <h1>Rapport de benchmarking</h1>
     </div>
-
-
 </div>
-
+<div class="row text-center">
+    <div class="col-4 offset-4">
+        <h2><i>{{ team | title }} team</i> solutions</h2>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-6">
+        <h2>Tool1</h2>
+    </div>
+    <div class="col-6">
+        <h2>Tool2</h2>
+    </div>
+</div>
 {% endblock %}

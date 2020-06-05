@@ -30,7 +30,6 @@ class BlueNote(models.Model):
 class BlueWeight(models.Model):
     # Metadata
     customer_id = models.IntegerField()
-    tool_id = models.IntegerField()
 
     # Criteria weights
     detection = models.IntegerField()
@@ -42,7 +41,7 @@ class BlueWeight(models.Model):
     prevention = models.IntegerField()
 
     def __str__(self):
-        return "BlueWeight: {} ({})".format(self.customer_id, self.tool_id)
+        return "BlueWeight: {}".format(self.customer_id)
 
 
 class RedNote(models.Model):
@@ -70,7 +69,6 @@ class RedNote(models.Model):
 class RedWeight(models.Model):
     # Metadata
     customer_id = models.IntegerField()
-    tool_id = models.IntegerField()
 
     # Criteria weights
     mise_a_jour = models.IntegerField()
@@ -86,4 +84,4 @@ class RedWeight(models.Model):
     compatibilite_avec_outis_externes = models.IntegerField()
 
     def __str__(self):
-        return "RedWeight: {} ({})".format(self.customer_id, self.tool_id)
+        return "RedWeight: {}".format(self.customer_id)
