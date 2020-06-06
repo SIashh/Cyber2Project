@@ -2,8 +2,9 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import FileResponse, HttpResponse
 from django.shortcuts import render, redirect, reverse
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 
 from .models import BlueNote, BlueWeight, RedNote, RedWeight, Tool
@@ -17,14 +18,20 @@ from .forms import (
     StaffRedForm,
 )
 
+from xhtml2pdf import pisa
+
 
 def is_member_staff(user):
     return user.groups.filter(name="staff").exists()
 
-
 def is_member_customers(user):
     return user.groups.filter(name__in=["staff", "customers"]).exists()
 
+def customer_has_weighted_blue(user):
+    return user.id in [bw.customer_id for bw in BlueWeight.objects.all()]
+
+def customer_has_weighted_red(user):
+    return user.id in [rw.customer_id for rw in RedWeight.objects.all()]
 
 def staff_valid_data(team, form):
     # DB data
@@ -47,14 +54,6 @@ def staff_valid_data(team, form):
     if (customer, tool) in notes:
         return False
 
-    return True
-
-
-def customer_valid_data(request):
-    customers = [u.id for u in User.objects.filter(groups__name="customers")]
-    customer = request.user.id
-    if customer not in customers:
-        return False
     return True
 
 
@@ -186,8 +185,8 @@ def customer_blue(request):
                     prevention=form.cleaned_data.get("prevention"),
                 )
                 weight.save()
-                messages.success(request, _("Pondération enregistrée !"))
-                return redirect(reverse("customer_blue"))
+                messages.success(request, _("Pondération enregistrée ! Votre rapport de benchmarking Blue team est disponible dans votre profil !"))
+                return redirect(reverse("profile"))
             else:
                 # Yes, update in DB
                 weight = BlueWeight.objects.filter(
@@ -261,6 +260,9 @@ def customer_red(request):
                     ),
                 )
                 weight.save()
+
+                # TODO: Generate red team benchmarking here
+
                 messages.success(request, _("Pondération enregistrée !"))
                 return redirect(reverse("customer_red"))
             else:
@@ -303,43 +305,61 @@ def customer_red(request):
 @login_required
 @user_passes_test(is_member_customers)
 def benchmark_blue(request):
-    if request.method == "POST":
-        form = StaffBlueForm(data=request.POST)
-        form2 = StaffBlueForm(data=request.POST)
+    # Redirect user if he has not completed weighting
+    if not customer_has_weighted_blue(request.user) or not customer_has_weighted_red(request.user):
+        return redirect(reverse('profile'))
 
-        criteria = {}
+    # Get customer's notes in a dict
+    bns = BlueNote.objects.filter(customer_id=request.user.id)
+    notes = {}
+    for bn in bns:
+        notes[bn.tool_id] = {}
+        for criterion in CRITERIA_BLUE.keys():
+            notes[bn.tool_id][criterion] = getattr(bn, criterion)
 
-        if form2.is_valid():
-            for criterion in form2.cleaned_data.items():
-                print(criterion)
-                name, weight = criterion
-                criteria[name] = weight
-        if form.is_valid():
-            for criterion in form.cleaned_data.items():
-                print(criterion)
-                name, weight = criterion
-                criteria[name] = weight
-                first_tool = "Nessus"  # Exemples, à modifier
-                second_tool = "Qualys"  # Exemples, à modifier
-            # generate PDF document
-            # return PDF document
-            return render(
-                request,
-                "benchmark/report.html",
-                {
-                    "team": "blue",
-                    "first_tool": first_tool,
-                    "second_tool": second_tool,
-                },
-            )
-        else:
-            messages.error(request, _("Formulaire invalide."))
-    else:
-        return redirect(reverse("customer_blue"))
-    pass
+    # Get customer's weights in a dict
+    bws = BlueNote.objects.filter(customer_id=request.user.id)
+    weights = {}
+    for bw in bws:
+        weights[bw.tool_id] = {}
+        for criterion in CRITERIA_BLUE.keys():
+            weights[bw.tool_id][criterion] = getattr(bw, criterion)
+    
+    # For each team, for each tool, compute the total according to notes and weights and put it in a dict
+    totals = {}
+    for tool_id in notes.keys():
+        totals[tool_id] = 0
+        for criterion in CRITERIA_BLUE.keys():
+            # Note is the sum of note*weight for each criterion
+            note = notes[tool_id][criterion]
+            weight = weights[tool_id][criterion]
+            totals[tool_id] += note*weight
+    
+    # Which tool is the best?
+    best_tool = list(totals.keys())[0]
+    for tool_id in totals.keys():
+        if totals[tool_id] > totals[best_tool]:
+            best_tool = tool_id
+
+    # Generate HTML document
+    html = render_to_string('benchmark/report.html', {
+        'team': 'blue',
+        'notes': notes,
+        'weights': weights,
+        'totals': totals,
+        'best_tool': best_tool
+    })
+    
+    # Convert HTML to PDF
+    pdf = pisa.CreatePDF(html)
+    # TODO: line above gives "'pisaContext' object is not iterable" error.
+    #       => find a way to obtain bytes from this pisa object
+
+    # Return PDF document
+    return FileResponse(pdf, filename='Castle_benchmarking_blue_team.pdf')
 
 
 @login_required
 @user_passes_test(is_member_customers)
 def benchmark_red(request):
-    pass
+    pass # Copy-paste benchmark_blue code when finished and change 'blue' to 'red'
