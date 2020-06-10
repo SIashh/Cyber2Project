@@ -6,6 +6,7 @@ from django.http import FileResponse, HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
+from io import BytesIO
 
 from .models import BlueNote, BlueWeight, RedNote, RedWeight, Tool
 
@@ -351,12 +352,13 @@ def benchmark_blue(request):
     })
     
     # Convert HTML to PDF
-    pdf = pisa.CreatePDF(html)
-    # TODO: line above gives "'pisaContext' object is not iterable" error.
-    #       => find a way to obtain bytes from this pisa object
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
 
-    # Return PDF document
-    return FileResponse(pdf, filename='Castle_benchmarking_blue_team.pdf')
+    #Returns a pdf
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
 
 
 @login_required
