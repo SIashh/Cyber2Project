@@ -18,8 +18,8 @@ from .forms import (
     StaffRedForm,
 )
 
-from PyPDF2 import PdfFileMerger, PdfFileReader
 from xhtml2pdf import pisa
+from PyPDF2 import PdfFileMerger, PdfFileReader
 from io import BytesIO
 import os.path
 
@@ -308,8 +308,12 @@ def customer_red(request):
 @login_required
 @user_passes_test(is_member_customers)
 def benchmark_blue(request):
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    cover_filename = os.path.join(BASE_DIR, 'castle/static/cover_page.pdf')
+    report_filename = os.path.join(BASE_DIR, 'castle/static/report.pdf')
+
     # Redirect user if he has not completed weighting
-    if not customer_has_weighted_blue(request.user) or not customer_has_weighted_red(request.user):
+    if not customer_has_weighted_blue(request.user):
         return redirect(reverse('profile'))
 
     # Get customer's notes in a dict
@@ -321,12 +325,10 @@ def benchmark_blue(request):
             notes[bn.tool_id][criterion] = getattr(bn, criterion)
 
     # Get customer's weights in a dict
-    bws = BlueNote.objects.filter(customer_id=request.user.id)
+    bw = BlueWeight.objects.get(customer_id=request.user.id)
     weights = {}
-    for bw in bws:
-        weights[bw.tool_id] = {}
-        for criterion in CRITERIA_BLUE.keys():
-            weights[bw.tool_id][criterion] = getattr(bw, criterion)
+    for criterion in CRITERIA_BLUE.keys():
+        weights[criterion] = getattr(bw, criterion)
     
     # For each team, for each tool, compute the total according to notes and weights and put it in a dict
     totals = {}
@@ -335,7 +337,7 @@ def benchmark_blue(request):
         for criterion in CRITERIA_BLUE.keys():
             # Note is the sum of note*weight for each criterion
             note = notes[tool_id][criterion]
-            weight = weights[tool_id][criterion]
+            weight = weights[criterion]
             totals[tool_id] += note*weight
     
     # Which tool is the best?
@@ -345,12 +347,11 @@ def benchmark_blue(request):
             best_tool = tool_id
 
     # Generate HTML document
-    html = render_to_string('benchmark/report.html', {
-        'team': 'blue',
+    html = render_to_string('benchmark/report_blue.html', {
         'notes': notes,
-        'weights': weights[3],
+        'weights': weights,
         'totals': totals,
-        'best_tool': best_tool
+        'best_tool': Tool.objects.get(id=best_tool).name.title()
     })
     
     # Convert HTML to PDF
@@ -358,22 +359,85 @@ def benchmark_blue(request):
     pdf = pisa.pisaDocument(BytesIO(html.encode('ISO-8859-1')), result)
 
     # Opening the report's first page and merging with results
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    merged_pdfs= PdfFileMerger()
-    merged_pdfs.append(PdfFileReader(os.path.join(BASE_DIR, 'castle/static/page_couverture.pdf'), 'rb'))
+    merged_pdfs = PdfFileMerger()
+    merged_pdfs.append(PdfFileReader(cover_filename, 'rb'))
     pdf_content = BytesIO(result.getvalue())
     merged_pdfs.append(PdfFileReader(pdf_content))
 
-    # Writting the report and printing it
-    merged_pdfs.write(os.path.join(BASE_DIR, 'castle/static/report.pdf'))
-    with open(os.path.join(BASE_DIR, 'castle/static/report.pdf'), 'rb') as report:
-        #Returns a pdf
-        if not pdf.err:
-            return HttpResponse(report, content_type='application/pdf')
-        return None
+    # Writing the report and printing it
+    merged_pdfs.write(report_filename)
+
+    if not pdf.err:
+        return FileResponse(open(report_filename, 'rb'))
+    else:
+        messages.error(request, _("Erreur lors de la génération du rapport."))
+        return redirect(reverse("profile"))
 
 
 @login_required
 @user_passes_test(is_member_customers)
 def benchmark_red(request):
-    pass # Copy-paste benchmark_blue code when finished and change 'blue' to 'red'
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    cover_filename = os.path.join(BASE_DIR, 'castle/static/cover_page.pdf')
+    report_filename = os.path.join(BASE_DIR, 'castle/static/report.pdf')
+
+    # Redirect user if he has not completed weighting
+    if not customer_has_weighted_red(request.user):
+        return redirect(reverse('profile'))
+
+    # Get customer's notes in a dict
+    rns = RedNote.objects.filter(customer_id=request.user.id)
+    notes = {}
+    for rn in rns:
+        notes[rn.tool_id] = {}
+        for criterion in CRITERIA_RED.keys():
+            notes[rn.tool_id][criterion] = getattr(rn, criterion)
+
+    # Get customer's weights in a dict
+    rw = RedWeight.objects.get(customer_id=request.user.id)
+    weights = {}
+    for criterion in CRITERIA_RED.keys():
+        weights[criterion] = getattr(rw, criterion)
+    
+    # For each team, for each tool, compute the total according to notes and weights and put it in a dict
+    totals = {}
+    for tool_id in notes.keys():
+        totals[tool_id] = 0
+        for criterion in CRITERIA_RED.keys():
+            # Note is the sum of note*weight for each criterion
+            note = notes[tool_id][criterion]
+            weight = weights[criterion]
+            totals[tool_id] += note*weight
+    
+    # Which tool is the best?
+    best_tool = list(totals.keys())[0]
+    for tool_id in totals.keys():
+        if totals[tool_id] > totals[best_tool]:
+            best_tool = tool_id
+
+    # Generate HTML document
+    html = render_to_string('benchmark/report_red.html', {
+        'notes': notes,
+        'weights': weights,
+        'totals': totals,
+        'best_tool': Tool.objects.get(id=best_tool).name.title()
+    })
+    
+    # Convert HTML to PDF
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode('ISO-8859-1')), result)
+
+    # Opening the report's first page and merging with results
+    merged_pdfs = PdfFileMerger()
+    merged_pdfs.append(PdfFileReader(cover_filename, 'rb'))
+    pdf_content = BytesIO(result.getvalue())
+    merged_pdfs.append(PdfFileReader(pdf_content))
+
+    # Writing the report and printing it
+    merged_pdfs.write(report_filename)
+
+    if not pdf.err:
+        return FileResponse(open(report_filename, 'rb'))
+    else:
+        messages.error(request, _("Erreur lors de la génération du rapport."))
+        return redirect(reverse("profile"))

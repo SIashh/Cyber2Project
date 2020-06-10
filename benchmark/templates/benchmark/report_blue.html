@@ -1,0 +1,78 @@
+<h1 style="text-align: center;">Rapport de benchmarking des solutions de sécurité <i>Blue team</i></h1>
+<div>
+    <h2>Synthèse des notations et pondérations</h2>
+    <table style="border: solid black;">
+        <tr style="padding: 5px 0 3px 0; text-align: center;">
+            <th rowspan="2">Critère</th>
+            <th colspan="2">Suricata</th>
+            <th colspan="2">Snort</th>
+        </tr>
+        <tr style="padding: 5px 0 3px 0; text-align: center;">
+            <th>Note</th>
+            <th>Poids</th>
+            <th>Note</th>
+            <th>Poids</th>
+        </tr>
+        <tr style="padding: 5px 0 3px 0; text-align: center;">
+            <td>Détection</td>
+            <td>{{ notes.3.detection }}</td>
+            <td>{{ weights.detection }}</td>
+            <td>{{ notes.4.detection }}</td>
+            <td>{{ weights.detection }}</td>
+        </tr>
+        <tr style="padding: 5px 0 3px 0; text-align: center;">
+            <td>Capacité d'analyse</td>
+            <td>{{ notes.3.capacite_d_analyse }}</td>
+            <td>{{ weights.capacite_d_analyse }}</td>
+            <td>{{ notes.4.capacite_d_analyse }}</td>
+            <td>{{ weights.capacite_d_analyse }}</td>
+        </tr>
+        <tr style="padding: 5px 0 3px 0; text-align: center;">
+            <td>Complexité d'analyse</td>
+            <td>{{ notes.3.complexite_d_analyse }}</td>
+            <td>{{ weights.complexite_d_analyse }}</td>
+            <td>{{ notes.4.complexite_d_analyse }}</td>
+            <td>{{ weights.complexite_d_analyse }}</td>
+        </tr>
+        <tr style="padding: 5px 0 3px 0; text-align: center;">
+            <td>Export des résultats</td>
+            <td>{{ notes.3.export_des_resultats }}</td>
+            <td>{{ weights.export_des_resultats }}</td>
+            <td>{{ notes.4.export_des_resultats }}</td>
+            <td>{{ weights.export_des_resultats }}</td>
+        </tr>
+        <tr style="padding: 5px 0 3px 0; text-align: center;">
+            <td>Création de règles</td>
+            <td>{{ notes.3.creation_de_regles }}</td>
+            <td>{{ weights.creation_de_regles }}</td>
+            <td>{{ notes.4.creation_de_regles }}</td>
+            <td>{{ weights.creation_de_regles }}</td>
+        </tr>
+        <tr style="padding: 5px 0 3px 0; text-align: center;">
+            <td>Export de fichier suspect</td>
+            <td>{{ notes.3.export_de_fichier_suspect }}</td>
+            <td>{{ weights.export_de_fichier_suspect }}</td>
+            <td>{{ notes.4.export_de_fichier_suspect }}</td>
+            <td>{{ weights.export_de_fichier_suspect }}</td>
+        </tr>
+        <tr style="padding: 5px 0 3px 0; text-align: center;">
+            <td>Prévention</td>
+            <td>{{ notes.3.prevention }}</td>
+            <td>{{ weights.prevention }}</td>
+            <td>{{ notes.4.prevention }}</td>
+            <td>{{ weights.prevention }}</td>
+        </tr>
+        <tr style="padding: 5px 0 3px 0; text-align: center;">
+            <th>Note finale</th>
+            <th colspan="2">{{ totals.3 }}</th>
+            <th colspan="2">{{ totals.4 }}</th>
+        </tr>
+    </table>
+</div>
+<br>
+<br>
+<div>
+    <h2>Appréciation</h2>
+    <p style="text-align: center;">D'après les résutats ci-dessus, la solution de sécurité défensive dont vous avez besoin est :</p>
+    <p style="text-align: center;"><b>{{ best_tool }}</b></p>
+</div>
