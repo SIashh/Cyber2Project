@@ -4,8 +4,7 @@
 {% block content %}
 <div class="row text-center">
     <div class="col-4 offset-4">
-        <h1>Benchmark's report of the {{ team | title }} solutions {{ first_tool }} and {{ second_tool }}</h1>
-        <h1>Rapport de benchmarking</h1>
+        <h1>Rapport de benchmarking des solutions {{ team }}</h1>
     </div>
 </div>
 <div class="row text-center">
@@ -17,6 +16,10 @@
     <div class="col-6">
         <h2>Tool1</h2>
     </div>
+    {% for key, value in weights.items %}
+        <li>{{ key }} {{ value }}</li>
+
+    {% endfor %}
     <div class="col-6">
         <h2>Tool2</h2>
     </div>

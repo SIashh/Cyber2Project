@@ -7,6 +7,8 @@ from django.shortcuts import render, redirect, reverse
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from io import BytesIO
+import os.path
+from PyPDF2 import PdfFileMerger, PdfFileReader
 
 from .models import BlueNote, BlueWeight, RedNote, RedWeight, Tool
 
@@ -342,23 +344,35 @@ def benchmark_blue(request):
         if totals[tool_id] > totals[best_tool]:
             best_tool = tool_id
 
+    print(weights)
+
     # Generate HTML document
     html = render_to_string('benchmark/report.html', {
         'team': 'blue',
         'notes': notes,
-        'weights': weights,
+        'weights': weights[3],
         'totals': totals,
         'best_tool': best_tool
     })
     
     # Convert HTML to PDF
     result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    pdf = pisa.pisaDocument(BytesIO(html.encode('ISO-8859-1')), result)
 
-    #Returns a pdf
-    if not pdf.err:
-        return HttpResponse(result.getvalue(), content_type='application/pdf')
-    return None
+    #Opening the report's first page and merging with results
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    mergedPdfs= PdfFileMerger()
+    mergedPdfs.append(PdfFileReader(os.path.join(BASE_DIR, 'castle/static/PageCouverture.pdf'), 'rb'))
+    pdf_content = BytesIO(result.getvalue())
+    mergedPdfs.append(PdfFileReader(pdf_content))
+
+    #Writting the report and printing it
+    mergedPdfs.write(os.path.join(BASE_DIR, 'castle/static/Report.pdf'))
+    with open(os.path.join(BASE_DIR, 'castle/static/Report.pdf'), 'rb') as report:
+        #Returns a pdf
+        if not pdf.err:
+            return HttpResponse(report, content_type='application/pdf')
+        return None
 
 
 @login_required
