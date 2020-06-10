@@ -8,6 +8,7 @@
         </div>
     </div>
 </div>
+{% if customer_has_weighted_blue or customer_has_weighted_red %}
 <div class="container mt-4">
     <div class="row">
         <div class="col-8 offset-2">
@@ -17,16 +18,21 @@
     <div class="row">
         <div class="col-8 offset-2">
             <ul class="list-group">
+                {% if customer_has_weighted_blue %}
                 <li class="list-group-item">
                     <a href="{% url 'benchmark_blue' %}">Rapport de benchmarking Blue team</a>
                 </li>
+                {% endif %}
+                {% if customer_has_weighted_red %}
                 <li class="list-group-item">
                     <a href="{% url 'benchmark_red' %}">Rapport de benchmarking Red team</a>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </div>
 </div>
+{% endif %}
 <div class="container mt-4">
     <div class="row">
         <div class="col-8 offset-2">

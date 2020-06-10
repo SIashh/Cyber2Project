@@ -20,7 +20,17 @@ from django.contrib.auth.views import (
 )
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
+
+from benchmark.models import BlueNote, BlueWeight, RedNote, RedWeight, Tool
+
 from .forms import SignUpForm
+
+
+def customer_has_weighted_blue(user):
+    return user.id in [bw.customer_id for bw in BlueWeight.objects.all()]
+
+def customer_has_weighted_red(user):
+    return user.id in [rw.customer_id for rw in RedWeight.objects.all()]
 
 
 class PasswordReset(PasswordResetView):
@@ -102,4 +112,7 @@ def password_change(request):
 
 @login_required
 def profile(request):
-    return render(request, "accounts/profile.html")
+    return render(request, "accounts/profile.html", {
+        "customer_has_weighted_blue": customer_has_weighted_blue(request.user),
+        "customer_has_weighted_red": customer_has_weighted_red(request.user)
+    })
