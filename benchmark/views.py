@@ -6,9 +6,6 @@ from django.http import FileResponse, HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
-from io import BytesIO
-import os.path
-from PyPDF2 import PdfFileMerger, PdfFileReader
 
 from .models import BlueNote, BlueWeight, RedNote, RedWeight, Tool
 
@@ -21,7 +18,10 @@ from .forms import (
     StaffRedForm,
 )
 
+from PyPDF2 import PdfFileMerger, PdfFileReader
 from xhtml2pdf import pisa
+from io import BytesIO
+import os.path
 
 
 def is_member_staff(user):
@@ -344,8 +344,6 @@ def benchmark_blue(request):
         if totals[tool_id] > totals[best_tool]:
             best_tool = tool_id
 
-    print(weights)
-
     # Generate HTML document
     html = render_to_string('benchmark/report.html', {
         'team': 'blue',
@@ -359,16 +357,16 @@ def benchmark_blue(request):
     result = BytesIO()
     pdf = pisa.pisaDocument(BytesIO(html.encode('ISO-8859-1')), result)
 
-    #Opening the report's first page and merging with results
+    # Opening the report's first page and merging with results
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    mergedPdfs= PdfFileMerger()
-    mergedPdfs.append(PdfFileReader(os.path.join(BASE_DIR, 'castle/static/PageCouverture.pdf'), 'rb'))
+    merged_pdfs= PdfFileMerger()
+    merged_pdfs.append(PdfFileReader(os.path.join(BASE_DIR, 'castle/static/page_couverture.pdf'), 'rb'))
     pdf_content = BytesIO(result.getvalue())
-    mergedPdfs.append(PdfFileReader(pdf_content))
+    merged_pdfs.append(PdfFileReader(pdf_content))
 
-    #Writting the report and printing it
-    mergedPdfs.write(os.path.join(BASE_DIR, 'castle/static/Report.pdf'))
-    with open(os.path.join(BASE_DIR, 'castle/static/Report.pdf'), 'rb') as report:
+    # Writting the report and printing it
+    merged_pdfs.write(os.path.join(BASE_DIR, 'castle/static/report.pdf'))
+    with open(os.path.join(BASE_DIR, 'castle/static/report.pdf'), 'rb') as report:
         #Returns a pdf
         if not pdf.err:
             return HttpResponse(report, content_type='application/pdf')
