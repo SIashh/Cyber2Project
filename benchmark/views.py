@@ -372,7 +372,7 @@ def benchmark_blue(request):
 
     # Convert HTML to PDF
     result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode('ISO-8859-1')), result)
+    pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), result)
 
     # Opening the report's first page and merging with results
     merged_pdfs = PdfFileMerger()
@@ -454,7 +454,7 @@ def benchmark_red(request):
 
     # Convert HTML to PDF
     result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode('ISO-8859-1')), result)
+    pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), result)
 
     # Opening the report's first page and merging with results
     merged_pdfs = PdfFileMerger()
