@@ -109,8 +109,8 @@
 </div>
 <p style="page-break-before: always">
     <h1 style="text-align: center;">Rapport de benchmarking des solutions de sécurité <i>Red team</i></h1>
-    <h1>Résultats de l'évaluation de {{ name_first_tool }}</h1>
-    {% for key, value in red_criterias.items %}
+    <h1>Résultats détaillés de l'évaluation de {{ first_tool.name }}</h1>
+    {% for key, value in red_criteria.items %}
         {% for label, description in value.items %}
             {% if label == "label" %}
                 <table style="border: solid black; padding: 4px; text-justify: auto">
@@ -123,9 +123,9 @@
             {% endif %}
         {% endfor %}
         <p>Note attribuée pour ce critère :
-        {% for criteria, mark in notes_first_tool.items %}
+        {% for criteria, mark in first_tool.notes.items %}
             {% if criteria == key %}
-                {% for key2, value2 in red_criterias.items %}
+                {% for key2, value2 in red_criteria.items %}
                     {% if key2 == criteria %}
                         {% for label2, description2 in value.items %}
                             {% if label2 == 'notes' %}
@@ -144,8 +144,8 @@
 </p>
 <p style="page-break-before: always">
     <h1 style="text-align: center;">Rapport de benchmarking des solutions de sécurité <i>Red team</i></h1>
-    <h1>Résultats de l'évaluation de {{ name_second_tool }}</h1>
-    {% for key, value in red_criterias.items %}
+    <h1>Résultats détaillés de l'évaluation de {{ second_tool.name }}</h1>
+    {% for key, value in red_criteria.items %}
         {% for label, description in value.items %}
             {% if label == "label" %}
                 <table style="border: solid black; padding: 4px; text-justify: auto">
@@ -158,9 +158,9 @@
             {% endif %}
         {% endfor %}
         <p>Note attribuée pour ce critère :
-        {% for criteria, mark in notes_first_tool.items %}
+        {% for criteria, mark in first_tool.notes.items %}
             {% if criteria == key %}
-                {% for key2, value2 in red_criterias.items %}
+                {% for key2, value2 in red_criteria.items %}
                     {% if key2 == criteria %}
                         {% for label2, description2 in value.items %}
                             {% if label2 == 'notes' %}

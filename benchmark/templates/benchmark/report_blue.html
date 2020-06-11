@@ -76,3 +76,73 @@
     <p style="text-align: center;">D'après les résutats ci-dessus, la solution de sécurité défensive dont vous avez besoin est :</p>
     <p style="text-align: center;"><b>{{ best_tool }}</b></p>
 </div>
+<p style="page-break-before: always">
+    <h1 style="text-align: center;">Rapport de benchmarking des solutions de sécurité <i>Blue team</i></h1>
+    <h1>Résultats détaillés de l'évaluation de {{ first_tool.name }}</h1>
+    {% for key, value in blue_criteria.items %}
+        {% for label, description in value.items %}
+            {% if label == "label" %}
+                <table style="border: solid black; padding: 4px; text-justify: auto">
+                    <tr>
+                        <td style="vertical-align: top"><h2>Critère : {{ description }} </h2></td>
+            {% elif label == "help_text" %}
+                        <td style="vertical-align: top"><h2>Description du critère de notation : </h2> {{ description }}</td>
+                    </tr>
+                </table> </br>
+            {% endif %}
+        {% endfor %}
+        <p>Note attribuée pour ce critère :
+        {% for criteria, mark in first_tool.notes.items %}
+            {% if criteria == key %}
+                {% for key2, value2 in blue_criteria.items %}
+                    {% if key2 == criteria %}
+                        {% for label2, description2 in value.items %}
+                            {% if label2 == 'notes' %}
+                                {% for mark2, signification  in description2.items %}
+                                    {% if mark2 == mark %}
+                                        {{ mark }} / 5 </p> {{ signification }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</p>
+<p style="page-break-before: always">
+    <h1 style="text-align: center;">Rapport de benchmarking des solutions de sécurité <i>Blue team</i></h1>
+    <h1>Résultats détaillés de l'évaluation de {{ second_tool.name }}</h1>
+    {% for key, value in blue_criteria.items %}
+        {% for label, description in value.items %}
+            {% if label == "label" %}
+                <table style="border: solid black; padding: 4px; text-justify: auto">
+                    <tr>
+                        <td style="vertical-align: top"><h2>Critère : {{ description }} </h2></td>
+            {% elif label == "help_text" %}
+                        <td style="vertical-align: top"><h2>Description du critère de notation : </h2> {{ description }}</td>
+                    </tr>
+                </table> </br>
+            {% endif %}
+        {% endfor %}
+        <p>Note attribuée pour ce critère :
+        {% for criteria, mark in first_tool.notes.items %}
+            {% if criteria == key %}
+                {% for key2, value2 in blue_criteria.items %}
+                    {% if key2 == criteria %}
+                        {% for label2, description2 in value.items %}
+                            {% if label2 == 'notes' %}
+                                {% for mark2, signification  in description2.items %}
+                                    {% if mark2 == mark %}
+                                        {{ mark }} / 5 </p> {{ signification }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</p>

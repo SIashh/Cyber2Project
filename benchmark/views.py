@@ -312,6 +312,7 @@ def benchmark_blue(request):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     cover_filename = os.path.join(BASE_DIR, 'castle/static/cover_page.pdf')
     report_filename = os.path.join(BASE_DIR, 'castle/static/report.pdf')
+    blue_criteria_filename = os.path.join(BASE_DIR, 'castle/static/blue.json')
 
 
     # Redirect user if he has not completed weighting
@@ -324,7 +325,7 @@ def benchmark_blue(request):
     for bn in bns:
         notes[bn.tool_id] = {}
         for criterion in CRITERIA_BLUE.keys():
-            notes[bn.tool_id][criterion] = getattr(bn, criterion)
+            notes[bn.tool_id][criterion] = str(getattr(bn, criterion))
 
     # Get customer's weights in a dict
     bw = BlueWeight.objects.get(customer_id=request.user.id)
@@ -340,7 +341,7 @@ def benchmark_blue(request):
             # Note is the sum of note*weight for each criterion
             note = notes[tool_id][criterion]
             weight = weights[criterion]
-            totals[tool_id] += note*weight
+            totals[tool_id] += int(note)*weight
     
     # Which tool is the best?
     best_tool = list(totals.keys())[0]
@@ -348,14 +349,27 @@ def benchmark_blue(request):
         if totals[tool_id] > totals[best_tool]:
             best_tool = tool_id
 
+    with open(blue_criteria_filename) as blue_criteria_file:
+        blue_criteria = load(blue_criteria_file)
+
+    # Filtering data
+    all_tools = Tool.objects.all()
+    notes_first_tool = list(notes.values())[0]
+    notes_second_tool = list(notes.values())[1]
+    name_first_tool = all_tools[list(notes.keys())[0] - 1].name
+    name_second_tool = all_tools[list(notes.keys())[1] - 1].name
+
     # Generate HTML document
     html = render_to_string('benchmark/report_blue.html', {
+        'first_tool': {'name': name_first_tool, 'notes': notes_first_tool},
+        'second_tool': {'name': name_second_tool, 'notes': notes_second_tool},
+        'blue_criteria': blue_criteria,
         'notes': notes,
         'weights': weights,
         'totals': totals,
         'best_tool': Tool.objects.get(id=best_tool).name.title()
     })
-    
+
     # Convert HTML to PDF
     result = BytesIO()
     pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), result)
@@ -382,7 +396,7 @@ def benchmark_red(request):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     cover_filename = os.path.join(BASE_DIR, 'castle/static/cover_page.pdf')
     report_filename = os.path.join(BASE_DIR, 'castle/static/report.pdf')
-    red_criterias_filename = os.path.join(BASE_DIR, 'castle/static/red.json')
+    red_criteria_filename = os.path.join(BASE_DIR, 'castle/static/red.json')
 
     # Redirect user if he has not completed weighting
     if not customer_has_weighted_red(request.user):
@@ -418,8 +432,8 @@ def benchmark_red(request):
         if totals[tool_id] > totals[best_tool]:
             best_tool = tool_id
 
-    with open(red_criterias_filename) as red_criterias_file:
-        red_criterias = load(red_criterias_file)
+    with open(red_criteria_filename) as red_criteria_file:
+        red_criteria = load(red_criteria_file)
 
     all_tools =Tool.objects.all()
     notes_first_tool = list(notes.values())[0]
@@ -427,21 +441,11 @@ def benchmark_red(request):
     name_first_tool = all_tools[list(notes.keys())[0] - 1].name
     name_second_tool = all_tools[list(notes.keys())[1] - 1].name
 
-    print(Tool.objects.all())
-    print(name_first_tool)
-    print(name_second_tool)
-    print("Notes :")
-    print(notes_first_tool) #TODO :remove
-    print("Critères :")
-    print(red_criterias) #TODO :remove
-
     # Generate HTML document
     html = render_to_string('benchmark/report_red.html', {
-        'name_first_tool': name_first_tool,
-        'name_second_tool': name_second_tool,
-        'notes_first_tool': notes_first_tool,
-        'notes_second_tool': notes_second_tool,
-        'red_criterias': red_criterias,
+        'first_tool': {'name': name_first_tool, 'notes': notes_first_tool},
+        'second_tool': {'name': name_second_tool, 'notes': notes_second_tool},
+        'red_criteria': red_criteria,
         'notes': notes,
         'weights': weights,
         'totals': totals,
