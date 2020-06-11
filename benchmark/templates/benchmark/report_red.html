@@ -1,3 +1,6 @@
+{% extends 'castle/baseReport.html' %}
+
+{% block content %}
 <h1 style="text-align: center;">Rapport de benchmarking des solutions de sécurité <i>Red team</i></h1>
 <div>
     <h2>Synthèse des notations et pondérations</h2>
@@ -104,3 +107,18 @@
     <p style="text-align: center;">D'après les résutats ci-dessus, la solution de sécurité offensive dont vous avez besoin est :</p>
     <p style="text-align: center;"><b>{{ best_tool }}</b></p>
 </div>
+<p style="page-break-before: always">
+    <h1>Résultats de l'évaluation de Suricata</h1>
+    {% for key, value in red_criterias.items %}
+        {% for label, description in value.items %}
+            {% if label == "label" %}
+                <table class="table">
+                    <tr><td><h2>Critère : {{ description }} </h2></td>
+            {% elif label == "help_text" %}
+                    <td><h3>Description : </h3> {{ description }}</td></tr>
+                </table> </br>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</p>
+{% endblock %}

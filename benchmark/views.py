@@ -18,9 +18,11 @@ from .forms import (
     StaffRedForm,
 )
 
-from xhtml2pdf import pisa
-from PyPDF2 import PdfFileMerger, PdfFileReader
 from io import BytesIO
+from json import load
+from PyPDF2 import PdfFileMerger, PdfFileReader
+from weasyprint import HTML
+from xhtml2pdf import pisa
 import os.path
 
 
@@ -312,6 +314,7 @@ def benchmark_blue(request):
     cover_filename = os.path.join(BASE_DIR, 'castle/static/cover_page.pdf')
     report_filename = os.path.join(BASE_DIR, 'castle/static/report.pdf')
 
+
     # Redirect user if he has not completed weighting
     if not customer_has_weighted_blue(request.user):
         return redirect(reverse('profile'))
@@ -356,7 +359,7 @@ def benchmark_blue(request):
     
     # Convert HTML to PDF
     result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode('ISO-8859-1')), result)
+    pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), result)
 
     # Opening the report's first page and merging with results
     merged_pdfs = PdfFileMerger()
@@ -380,6 +383,8 @@ def benchmark_red(request):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     cover_filename = os.path.join(BASE_DIR, 'castle/static/cover_page.pdf')
     report_filename = os.path.join(BASE_DIR, 'castle/static/report.pdf')
+    red_criterias_filename = os.path.join(BASE_DIR, 'castle/static/red.json')
+    tmp_filename = os.path.join(BASE_DIR, 'castle/static/tmp.pdf')
 
     # Redirect user if he has not completed weighting
     if not customer_has_weighted_red(request.user):
@@ -415,29 +420,45 @@ def benchmark_red(request):
         if totals[tool_id] > totals[best_tool]:
             best_tool = tool_id
 
+    with open(red_criterias_filename) as red_criterias_file:
+        red_criterias = load(red_criterias_file)
+
+    notes_first_tool = list(notes.values())[0]
+    notes_second_tool = list(notes.items())[1]
+
+    print(notes_first_tool) #TODO :remove
+    print(red_criterias) #TODO :remove
+    print(notes) #TODO :remove
+
     # Generate HTML document
     html = render_to_string('benchmark/report_red.html', {
+        'notes_first_tool': notes_first_tool,
+        'red_criterias': red_criterias,
         'notes': notes,
         'weights': weights,
         'totals': totals,
         'best_tool': Tool.objects.get(id=best_tool).name.title()
     })
-    
-    # Convert HTML to PDF
-    result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode('ISO-8859-1')), result)
+
+    # Convert HTML to PDF with style
+    try:
+        HTML(string=html).write_pdf(tmp_filename, stylesheets=['https://stackpath.bootstrapcdn.com/bootstrap/4.5.0'
+                                                               '/css/bootstrap.min.css',
+                                                               'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js'
+                                                               '/bootstrap.min.js',
+                                                               'https://code.jquery.com/jquery-3.5.1.slim.min.js',
+                                                               'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist'
+                                                               '/umd/popper.min.js'])
+    except Exception as e:
+        print(str(e))
 
     # Opening the report's first page and merging with results
-    merged_pdfs = PdfFileMerger()
+    merged_pdfs = PdfFileMerger(strict=False)
     merged_pdfs.append(PdfFileReader(cover_filename, 'rb'))
-    pdf_content = BytesIO(result.getvalue())
-    merged_pdfs.append(PdfFileReader(pdf_content))
+    merged_pdfs.append(PdfFileReader(tmp_filename, 'rb'))
 
     # Writing the report and printing it
     merged_pdfs.write(report_filename)
 
-    if not pdf.err:
-        return FileResponse(open(report_filename, 'rb'))
-    else:
-        messages.error(request, _("Erreur lors de la génération du rapport."))
-        return redirect(reverse("profile"))
+    return FileResponse(open(report_filename, 'rb'))
+
