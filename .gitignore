@@ -6,6 +6,7 @@
 !castle/**
 !benchmark/
 !benchmark/**
+!db.sqlite3
 !manage.py
 !README.md
 
