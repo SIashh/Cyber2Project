@@ -7,8 +7,8 @@
     <table style="border: solid black;">
         <tr style="padding: 5px 0 3px 0; text-align: center;">
             <th rowspan="2">Critère</th>
-            <th colspan="2">Nessus</th>
-            <th colspan="2">OpenVAS</th>
+            <th colspan="2">{{ name_first_tool }}</th>
+            <th colspan="2">{{ name_second_tool }}</th>
         </tr>
         <tr style="padding: 5px 0 3px 0; text-align: center;">
             <th>Note</th>
@@ -108,17 +108,74 @@
     <p style="text-align: center;"><b>{{ best_tool }}</b></p>
 </div>
 <p style="page-break-before: always">
-    <h1>Résultats de l'évaluation de Suricata</h1>
+    <h1 style="text-align: center;">Rapport de benchmarking des solutions de sécurité <i>Red team</i></h1>
+    <h1>Résultats de l'évaluation de {{ name_first_tool }}</h1>
     {% for key, value in red_criterias.items %}
         {% for label, description in value.items %}
             {% if label == "label" %}
-                <table class="table">
-                    <tr><td><h2>Critère : {{ description }} </h2></td>
+                <table style="border: solid black; padding: 4px; text-justify: auto">
+                    <tr>
+                        <td style="vertical-align: top"><h2>Critère : {{ description }} </h2></td>
             {% elif label == "help_text" %}
-                    <td><h3>Description : </h3> {{ description }}</td></tr>
+                        <td style="vertical-align: top"><h2>Description du critère de notation : </h2> {{ description }}</td>
+                    </tr>
                 </table> </br>
+            {% endif %}
+        {% endfor %}
+        <p>Note attribuée pour ce critère :
+        {% for criteria, mark in notes_first_tool.items %}
+            {% if criteria == key %}
+                {% for key2, value2 in red_criterias.items %}
+                    {% if key2 == criteria %}
+                        {% for label2, description2 in value.items %}
+                            {% if label2 == 'notes' %}
+                                {% for mark2, signification  in description2.items %}
+                                    {% if mark2 == mark %}
+                                        {{ mark }} / 5 </p> {{ signification }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
             {% endif %}
         {% endfor %}
     {% endfor %}
 </p>
+<p style="page-break-before: always">
+    <h1 style="text-align: center;">Rapport de benchmarking des solutions de sécurité <i>Red team</i></h1>
+    <h1>Résultats de l'évaluation de {{ name_second_tool }}</h1>
+    {% for key, value in red_criterias.items %}
+        {% for label, description in value.items %}
+            {% if label == "label" %}
+                <table style="border: solid black; padding: 4px; text-justify: auto">
+                    <tr>
+                        <td style="vertical-align: top"><h2>Critère : {{ description }} </h2></td>
+            {% elif label == "help_text" %}
+                        <td style="vertical-align: top"><h2>Description du critère de notation : </h2> {{ description }}</td>
+                    </tr>
+                </table> </br>
+            {% endif %}
+        {% endfor %}
+        <p>Note attribuée pour ce critère :
+        {% for criteria, mark in notes_first_tool.items %}
+            {% if criteria == key %}
+                {% for key2, value2 in red_criterias.items %}
+                    {% if key2 == criteria %}
+                        {% for label2, description2 in value.items %}
+                            {% if label2 == 'notes' %}
+                                {% for mark2, signification  in description2.items %}
+                                    {% if mark2 == mark %}
+                                        {{ mark }} / 5 </p> {{ signification }}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</p>
+
 {% endblock %}

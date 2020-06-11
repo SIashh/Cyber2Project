@@ -394,7 +394,7 @@ def benchmark_red(request):
     for rn in rns:
         notes[rn.tool_id] = {}
         for criterion in CRITERIA_RED.keys():
-            notes[rn.tool_id][criterion] = getattr(rn, criterion)
+            notes[rn.tool_id][criterion] = str(getattr(rn, criterion))
 
     # Get customer's weights in a dict
     rw = RedWeight.objects.get(customer_id=request.user.id)
@@ -410,7 +410,7 @@ def benchmark_red(request):
             # Note is the sum of note*weight for each criterion
             note = notes[tool_id][criterion]
             weight = weights[criterion]
-            totals[tool_id] += note*weight
+            totals[tool_id] += int(note)*weight
     
     # Which tool is the best?
     best_tool = list(totals.keys())[0]
@@ -421,9 +421,15 @@ def benchmark_red(request):
     with open(red_criterias_filename) as red_criterias_file:
         red_criterias = load(red_criterias_file)
 
+    all_tools =Tool.objects.all()
     notes_first_tool = list(notes.values())[0]
-    notes_second_tool = list(notes.items())[1]
+    notes_second_tool = list(notes.values())[1]
+    name_first_tool = all_tools[list(notes.keys())[0] - 1].name
+    name_second_tool = all_tools[list(notes.keys())[1] - 1].name
 
+    print(Tool.objects.all())
+    print(name_first_tool)
+    print(name_second_tool)
     print("Notes :")
     print(notes_first_tool) #TODO :remove
     print("Critères :")
@@ -431,7 +437,10 @@ def benchmark_red(request):
 
     # Generate HTML document
     html = render_to_string('benchmark/report_red.html', {
+        'name_first_tool': name_first_tool,
+        'name_second_tool': name_second_tool,
         'notes_first_tool': notes_first_tool,
+        'notes_second_tool': notes_second_tool,
         'red_criterias': red_criterias,
         'notes': notes,
         'weights': weights,
